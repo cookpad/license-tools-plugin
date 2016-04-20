@@ -17,6 +17,7 @@ dependencies {
 
     compile 'com.android.tools.build:gradle:2.0.0'
     compile 'org.yaml:snakeyaml:1.17'
+    compile 'org.apache.commons:commons-lang3:3.4'
 }
 
 jar.baseName = 'license-tool-plugin'
