@@ -12,7 +12,10 @@ public class Licenses {
 
     public static String buildHtml(LibraryInfo library) {
         if (!library.license || library.license.equalsIgnoreCase("no license found")) {
-            throw new NoLicenseFoundException(library)
+            throw new NotEnoughInformationException(library)
+        }
+        if (!library.copyrightStatement) {
+            throw new NotEnoughInformationException(library)
         }
 
         def templateFile = "template/${library.license}.html"

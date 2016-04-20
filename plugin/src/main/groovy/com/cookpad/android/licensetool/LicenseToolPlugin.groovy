@@ -1,6 +1,5 @@
 package com.cookpad.android.licensetool
 
-import org.bouncycastle.LICENSE
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -62,7 +61,7 @@ class LicenseToolPlugin implements Plugin<Project> {
             libraryInfo.filename = filename
             libraryInfo.year = lib.year ?: 0
             libraryInfo.libraryName = lib.name
-            libraryInfo.authors = lib.authors ?: [lib.author as String]
+            libraryInfo.authors = lib.authors ?: (lib.author ? [lib.author as String] : [])
             libraryInfo.license = normalizeLicense(lib.license)
             libraryInfo.notice = lib.notice
             librariesMap[filename] = libraryInfo
@@ -129,22 +128,21 @@ class LicenseToolPlugin implements Plugin<Project> {
             libraryInfo.artifactId = o.artifactId
             try {
                 content.append(Licenses.buildHtml(libraryInfo));
-            } catch (NoLicenseFoundException e) {
+            } catch (NotEnoughInformationException e) {
                 noLicenseLibraries.add(e.libraryInfo)
             }
         }
 
         if (!noLicenseLibraries.empty) {
             StringBuilder message = new StringBuilder();
-            message.append("No license found for:\n")
+            message.append("Not enough information for:\n")
             message.append("---\n")
             noLicenseLibraries.each { libraryInfo ->
                 message.append("""- filename: ${libraryInfo.filename}
-  license: #LICENSE#
+  license: ${libraryInfo.license ?: "#LICENSE#"}
   name: ${libraryInfo.name}
-  author: #AUTHOR#
-  year: #YEAR#
-  notice: #NOTICE#
+  notice: ${libraryInfo.copyrightStatement ?: "#NOTICE#"}
+  year: ${libraryInfo.year}
 """)
             }
             throw new RuntimeException(message.toString())

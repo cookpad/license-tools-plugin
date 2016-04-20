@@ -24,6 +24,8 @@ public class LibraryInfo {
     public String getCopyrightStatement() {
         if (notice) {
             return notice;
+        } else if (authors.empty) {
+            return null;
         } else if (authors.size() == 1) {
             return buildCopyrightStatement(authors.first())
         } else {
@@ -35,7 +37,7 @@ public class LibraryInfo {
         }
     }
 
-    String buildCopyrightStatement(String authors) {
+    private String buildCopyrightStatement(String authors) {
         if (year > 0) {
             return "Copyright &copy; ${year}, ${authors}. All rights reserved."
         } else {
