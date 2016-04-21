@@ -12,8 +12,8 @@ repositories {
 apply plugin: 'groovy'
 apply plugin: 'maven' // add "plugin:install" to install it locally
 
-group = 'com.cookpad.android.licensetool'
-jar.baseName = 'license-tool-plugin'
+group = 'com.cookpad.android.licensetools'
+jar.baseName = 'license-tools-plugin'
 version = '0.3.0'
 
 dependencies {

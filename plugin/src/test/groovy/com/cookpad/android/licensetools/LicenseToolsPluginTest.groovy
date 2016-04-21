@@ -1,15 +1,12 @@
-package com.cookpad.android.licensetool
+package com.cookpad.android.licensetools
 
-import com.cookpad.android.licensetools.LicenseToolsPlugin
-
-import static org.junit.Assert.*;
+import org.junit.Test
 import org.yaml.snakeyaml.Yaml
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals
+import static org.junit.Assert.assertNotEquals;
 
 public class LicenseToolsPluginTest {
-
-    public static final Yaml yaml = new Yaml()
 
     @Test
     public void testSnakeYaml() {
