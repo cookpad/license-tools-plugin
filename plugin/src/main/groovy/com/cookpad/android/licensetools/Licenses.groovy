@@ -1,4 +1,4 @@
-package com.cookpad.android.licensetool
+package com.cookpad.android.licensetools
 
 import groovy.text.SimpleTemplateEngine
 import groovy.transform.CompileStatic

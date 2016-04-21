@@ -1,11 +1,11 @@
-package com.cookpad.android.licensetool
+package com.cookpad.android.licensetools
 
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.yaml.snakeyaml.Yaml
 
-class LicenseToolPlugin implements Plugin<Project> {
+class LicenseToolsPlugin implements Plugin<Project> {
 
     final yaml = new Yaml()
 
@@ -14,7 +14,7 @@ class LicenseToolPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        project.extensions.add(LicenseToolExtension.NAME, LicenseToolExtension)
+        project.extensions.add(LicenseToolsExtension.NAME, LicenseToolsExtension)
 
         def checkLicenses = project.task('checkLicenses') << {
             setup(project)
@@ -50,7 +50,7 @@ class LicenseToolPlugin implements Plugin<Project> {
     }
 
     void setup(Project project) {
-        LicenseToolExtension ext = project.extensions.findByType(LicenseToolExtension)
+        LicenseToolsExtension ext = project.extensions.findByType(LicenseToolsExtension)
         def aliases = loadYaml(project.file(ext.licenseAliasesYaml))
         def libraries = loadYaml(project.file(ext.licensesYaml))
         for (lib in libraries) {
@@ -112,7 +112,7 @@ class LicenseToolPlugin implements Plugin<Project> {
     }
 
     void generateLicensePage(Project project) {
-        def ext = project.extensions.getByType(LicenseToolExtension)
+        def ext = project.extensions.getByType(LicenseToolsExtension)
 
         def noLicenseLibraries = new ArrayList<LibraryInfo>()
         def content = new StringBuilder()

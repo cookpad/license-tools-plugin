@@ -1,4 +1,4 @@
-package com.cookpad.android.licensetool;
+package com.cookpad.android.licensetools;
 
 public class NotEnoughInformationException extends RuntimeException {
     public final LibraryInfo libraryInfo;

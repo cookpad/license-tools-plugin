@@ -1,11 +1,13 @@
 package com.cookpad.android.licensetool
 
+import com.cookpad.android.licensetools.LicenseToolsPlugin
+
 import static org.junit.Assert.*;
 import org.yaml.snakeyaml.Yaml
 
 import org.junit.Test;
 
-public class LicenseToolPluginTest {
+public class LicenseToolsPluginTest {
 
     public static final Yaml yaml = new Yaml()
 
@@ -22,7 +24,7 @@ public class LicenseToolPluginTest {
 
     @Test
     void testNormalizeLicense() {
-        LicenseToolPlugin tool = new LicenseToolPlugin();
+        LicenseToolsPlugin tool = new LicenseToolsPlugin();
         // Apache License 2.0
         assertEquals("apache2", tool.normalizeLicense("apache license2"))
         assertEquals("apache2", tool.normalizeLicense("Apache License2"))
