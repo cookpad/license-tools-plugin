@@ -8,7 +8,7 @@ public class LibraryInfo {
 
     String filename = "#filename#"
 
-    int year = 0;
+    String year = null;
 
     List<String> authors = []
 
@@ -38,7 +38,7 @@ public class LibraryInfo {
     }
 
     private String buildCopyrightStatement(String authors) {
-        if (year > 0) {
+        if (year) {
             return "Copyright &copy; ${year}, ${authors}. All rights reserved."
         } else {
             return "Copyright &copy; ${authors}. All rights reserved."

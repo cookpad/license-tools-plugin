@@ -1,6 +1,4 @@
-package com.cookpad.android.licensetool;
-
-import java.io.File;
+package com.cookpad.android.licensetool
 
 public class LicenseToolExtension {
 

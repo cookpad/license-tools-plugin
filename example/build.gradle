@@ -2,7 +2,7 @@ plugins {
     id "com.github.hierynomus.license" version "0.12.1"
 }
 apply plugin: 'com.android.application'
-apply plugin: 'com.cookpad.android.license-tool'
+apply plugin: 'com.cookpad.android.licensetool'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {

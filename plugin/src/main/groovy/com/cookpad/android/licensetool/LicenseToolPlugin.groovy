@@ -59,7 +59,7 @@ class LicenseToolPlugin implements Plugin<Project> {
             def filename = lib.filename as String
             def libraryInfo = new LibraryInfo()
             libraryInfo.filename = filename
-            libraryInfo.year = lib.year ?: 0
+            libraryInfo.year = lib.year
             libraryInfo.libraryName = lib.name
             libraryInfo.authors = lib.authors ?: (lib.author ? [lib.author as String] : [])
             libraryInfo.license = normalizeLicense(lib.license)
