@@ -2,7 +2,7 @@ plugins {
     id "com.github.hierynomus.license" version "0.12.1"
 }
 apply plugin: 'com.android.application'
-apply plugin: 'com.cookpad.android.licensetool'
+apply plugin: 'com.cookpad.android.licensetools'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
@@ -10,7 +10,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.cookpad.android.licensetool.example"
+        applicationId "com.cookpad.android.licensetools.example"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
@@ -26,6 +26,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+}
+
+licenseTools {
+    // ...
+}
+
+license {
+    header = project.rootProject.file('LICENSE')
+    ignoreFailures = true
 }
 
 downloadLicenses {

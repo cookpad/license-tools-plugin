@@ -1,20 +1,31 @@
 - filename: animated-vector-drawable-23.3.0.aar
   license: Apache 2.0
+  author:  The Android Open Source Project
 - filename: org.abego.treelayout.core-1.0.1.jar
   license: BSD 3-Clause "New" or "Revised" License (BSD-3-Clause)
+  author: abego Software
 - filename: rxjava-1.1.2.jar
+  author: Netflix, Inc.
+  year: 2013
   license: The Apache Software License, Version 2.0
 - filename: antlr4-runtime-4.5.jar
+  year: 2015
+  authors:
+    - Terence Parr
+    - Sam Harwell
   license: The BSD License
-- filename: orma-migration-2.4.1.aar
-  license: Apache 2.0
 - filename: gson-2.6.2.jar
+  year: 2008
+  author: Google Inc.
   license: Apache 2.0
 - filename: orma-2.4.1.aar
-  license: Apache 2.0
-- filename: picasso-2.5.2.jar
-  license: Apache 2.0
-- filename: orma-annotations-2.4.1.jar
+  author: FUJI Goro
+  year: 2015
   license: Apache 2.0
 - filename: rxandroid-1.1.0.aar
+  author: The RxAndroid authors
+  year: 2015
   license: The Apache Software License, Version 2.0
+- filename: glide-3.7.0.jar
+  author: Google Inc.
+  license: bsd_2_clauses

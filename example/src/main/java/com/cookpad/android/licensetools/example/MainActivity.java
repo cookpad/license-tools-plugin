@@ -1,4 +1,4 @@
-package com.cookpad.android.licensetool.example;
+package com.cookpad.android.licensetools.example;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
