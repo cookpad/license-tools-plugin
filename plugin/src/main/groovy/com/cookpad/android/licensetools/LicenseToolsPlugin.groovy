@@ -57,10 +57,11 @@ class LicenseToolsPlugin implements Plugin<Project> {
         }
         checkLicenses.dependsOn('downloadLicenses')
 
-        project.task('generateLicensePage') << {
+        def generateLicensePage = project.task('generateLicensePage') << {
             initialize(project)
             generateLicensePage(project)
         }
+        generateLicensePage.dependsOn('checkLicenses')
     }
 
     void initialize(Project project) {
