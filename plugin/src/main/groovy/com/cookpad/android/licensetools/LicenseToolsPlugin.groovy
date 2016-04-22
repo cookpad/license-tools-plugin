@@ -21,8 +21,9 @@ class LicenseToolsPlugin implements Plugin<Project> {
 
             def notDocumented = dependencyLicenseXml.notListedIn(librariesYaml)
             def notInDependencies = librariesYaml.notListedIn(dependencyLicenseXml)
+            def licensesNotMatched = dependencyLicenseXml.licensesNotMatched(librariesYaml)
 
-            if (notDocumented.size() == 0 && notInDependencies.size() == 0) {
+            if (notDocumented.empty && notInDependencies.empty && licensesNotMatched.empty) {
                 project.logger.info("checkLicenses: ok")
                 return
             }
@@ -35,6 +36,12 @@ class LicenseToolsPlugin implements Plugin<Project> {
             if (notInDependencies.size() > 0) {
                 project.logger.warn("# Libraries listed but not in dependencies:")
                 notInDependencies.each { libraryInfo ->
+                    project.logger.warn("- artifact: ${libraryInfo.artifactId} \n  license: ${libraryInfo.license}")
+                }
+            }
+            if (licensesNotMatched.size() > 0) {
+                project.logger.warn("# Licenses not matched with dependency-license.xml:")
+                licensesNotMatched.each { libraryInfo ->
                     project.logger.warn("- artifact: ${libraryInfo.artifactId} \n  license: ${libraryInfo.license}")
                 }
             }
