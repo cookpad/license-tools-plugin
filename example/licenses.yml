@@ -18,7 +18,9 @@
   license: bsd_3_clauses
 - artifact: com.github.gfx.android.orma:+:+
   name: Android Orma
-  copyrightHolder: FUJI Goro
+  notice: |
+    Copyright (c) 2015 FUJI Goro (gfx)
+    SQLite.g4 is: Copyright (c) 2014 by Bart Kiers
   license: apache_2
 - artifact: com.github.bumptech.glide:glide:+
   name: Glide
