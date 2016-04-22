@@ -1,20 +1,35 @@
+// This project's rootProject is ":buildSrc", so it should have a copy of build-script settings of the "/build.gradle"
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
+        classpath 'com.novoda:bintray-release:0.3.4' // https://github.com/novoda/bintray-release
     }
 }
 repositories {
     jcenter()
 }
 
-apply plugin: 'groovy'
-apply plugin: 'maven' // add "plugin:install" to install it locally
+apply from: file('../metadata.gradle')
 
-group = 'com.cookpad.android.licensetools'
-jar.baseName = 'license-tools-plugin'
-version = '0.3.0'
+ext {
+    versionFile = file("../VERSION")
+    versionName = versionFile.readLines()[0].trim()
+    metadata.version = versionName
+}
+
+apply plugin: 'groovy'
+apply plugin: 'maven' // to add "plugin:install" to install it locally
+apply plugin: 'com.novoda.bintray-release' // to upload it to bintray
+
+final metadata = ext.metadata
+final ARTIFACT_ID = "license-tools-plugin"
+
+// for "plugin:install"
+group = metadata.groupId
+jar.baseName = ARTIFACT_ID
+version = metadata.version
 
 dependencies {
     compile gradleApi()
@@ -26,3 +41,14 @@ dependencies {
 }
 
 
+publish {
+    artifactId = ARTIFACT_ID
+    desc = 'A Gradle plugin to handle android application license notations'
+
+    userOrg = metadata.organization
+    groupId = metadata.groupId
+    publishVersion = metadata.version
+    website = metadata.website
+    repository = metadata.repository
+    licences = metadata.licences
+}

@@ -1,8 +1,9 @@
 ext {
     metadata = [
-            groupId   : 'com.cookpad.android.licensetools',
-            website   : 'https://github.com/cookpad/license-tools-plugin',
-            repository: 'git@github.com:cookpad/license-tools-plugin.git',
-            licences  : ['Apache-2.0']
+            organization: 'cookpad-inc',
+            groupId     : 'com.cookpad.android.licensetools',
+            website     : 'https://github.com/cookpad/license-tools-plugin',
+            repository  : 'git@github.com:cookpad/license-tools-plugin.git',
+            licences    : ['Apache-2.0']
     ]
 }
