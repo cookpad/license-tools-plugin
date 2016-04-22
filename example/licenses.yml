@@ -1,31 +1,36 @@
-- filename: animated-vector-drawable-23.3.0.aar
-  license: Apache 2.0
-  author:  The Android Open Source Project
-- filename: org.abego.treelayout.core-1.0.1.jar
-  license: BSD 3-Clause "New" or "Revised" License (BSD-3-Clause)
-  author: abego Software
-- filename: rxjava-1.1.2.jar
-  author: Netflix, Inc.
-  year: 2013
-  license: The Apache Software License, Version 2.0
-- filename: antlr4-runtime-4.5.jar
-  year: 2015
+- artifact: com.android.support:+:+
+  name: Android Support Library
+  copyrightHolder: The Android Open Source Project
+  license: apache2
+- artifact: org.abego.treelayout:org.abego.treelayout.core:+
+  name: abego TreeLayout
+  copyrightHolder: abego Software
+  license: bsd_3_clauses
+- artifact: io.reactivex:rxjava:+
+  name: RxJava
+  copyrightHolder: Netflix, Inc.
+  license: apache2
+- artifact: com.tunnelvisionlabs:antlr4-runtime:4.5
+  name: ANTLR4
   authors:
     - Terence Parr
     - Sam Harwell
-  license: The BSD License
-- filename: gson-2.6.2.jar
-  year: 2008
-  author: Google Inc.
-  license: Apache 2.0
-- filename: orma-2.4.1.aar
-  author: FUJI Goro
-  year: 2015
-  license: Apache 2.0
-- filename: rxandroid-1.1.0.aar
-  author: The RxAndroid authors
-  year: 2015
-  license: The Apache Software License, Version 2.0
-- filename: glide-3.7.0.jar
-  author: Google Inc.
+  license: bsd_3_clauses
+- artifact: com.github.gfx.android.orma:+:+
+  name: Android Orma
+  copyrightHolder: FUJI Goro
+  license: apache_2
+- artifact: com.github.bumptech.glide:glide:+
+  name: Glide
+  copyrightHolder: Google Inc.
   license: bsd_2_clauses
+- artifact: com.google.code.gson:gson:+
+  name: Gson
+  copyrightHolder: Google Inc.
+  license: apache2
+- artifact: io.reactivex:rxandroid:1.1.0
+  name: RxAndroid
+  copyrightHolder: The RxAndroid authors
+  license: apache2
+- artifact: license-tools-plugin:example-dep:+
+  skip: true

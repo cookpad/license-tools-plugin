@@ -9,81 +9,66 @@ class LicenseToolsPlugin implements Plugin<Project> {
 
     final yaml = new Yaml()
 
-    final Map<String, LibraryInfo> librariesMap = [:] // based on libraries.yml
-    final Map<String, LibraryInfo> dependenciesMap = [:] // based on license plugin's dependency-license.xml
+    final DependencySet librariesYaml = new DependencySet() // based on libraries.yml
+    final DependencySet dependencyLicenseXml = new DependencySet() // based on license plugin's dependency-license.xml
 
     @Override
     void apply(Project project) {
         project.extensions.add(LicenseToolsExtension.NAME, LicenseToolsExtension)
 
         def checkLicenses = project.task('checkLicenses') << {
-            setup(project)
+            initialize(project)
 
-            def notDocumented = getNotListedInLibrariesYaml()
-            def notInDependencies = getNotListedInDependencies()
+            def notDocumented = dependencyLicenseXml.notListedIn(librariesYaml)
+            def notInDependencies = librariesYaml.notListedIn(dependencyLicenseXml)
+
             if (notDocumented.size() == 0 && notInDependencies.size() == 0) {
-                project.logger.info("checkLicenses: OK")
+                project.logger.info("checkLicenses: ok")
                 return
             }
             if (notDocumented.size() > 0) {
                 project.logger.warn("# Libraries not listed:")
-                notDocumented.each { key, value ->
-                    project.logger.warn("- filename: ${key} \n  license: ${value.license}")
+                notDocumented.each { libraryInfo ->
+                    project.logger.warn("- artifact: ${libraryInfo.artifactId} \n  license: ${libraryInfo.license}")
                 }
             }
             if (notInDependencies.size() > 0) {
                 project.logger.warn("# Libraries listed but not in dependencies:")
-                notInDependencies.each { key, libraryInfo ->
-                    project.logger.warn("- filename: ${key} \n  license: ${libraryInfo.license}")
+                notInDependencies.each { libraryInfo ->
+                    project.logger.warn("- artifact: ${libraryInfo.artifactId} \n  license: ${libraryInfo.license}")
                 }
             }
-            throw new GradleException("checkLicenses failed")
+            throw new GradleException("checkLicenses: failed")
         }
         checkLicenses.dependsOn('downloadLicenses')
         project.task('checkLicense').dependsOn(checkLicenses)
 
 
         project.task('generateLicensePage') << {
-            setup(project)
+            initialize(project)
             generateLicensePage(project)
         }
     }
 
-    void setup(Project project) {
-        LicenseToolsExtension ext = project.extensions.findByType(LicenseToolsExtension)
-        def aliases = loadYaml(project.file(ext.licenseAliasesYaml))
-        def libraries = loadYaml(project.file(ext.licensesYaml))
-        for (lib in libraries) {
-            def filename = lib.filename as String
-            def libraryInfo = new LibraryInfo()
-            libraryInfo.filename = filename
-            libraryInfo.year = lib.year
-            libraryInfo.libraryName = lib.name
-            libraryInfo.authors = lib.authors ?: (lib.author ? [lib.author as String] : [])
-            libraryInfo.license = normalizeLicense(lib.license)
-            libraryInfo.notice = lib.notice
-            librariesMap[filename] = libraryInfo
-        }
-        setupDependenciesMap(aliases as Map<String, String>, project.file("build/reports/license/dependency-license.xml"))
+    void initialize(Project project) {
+        loadLibrariesYaml(project)
+        loadDependencyLicenseXml(project.file("build/reports/license/dependency-license.xml"))
     }
 
-    void setupDependenciesMap(Map<String, String> aliases, File xmlPath) {
+    void loadLibrariesYaml(Project project) {
+        LicenseToolsExtension ext = project.extensions.findByType(LicenseToolsExtension)
+        def libraries = loadYaml(project.file(ext.licensesYaml))
+        for (lib in libraries) {
+            def libraryInfo = LibraryInfo.fromYaml(lib)
+            librariesYaml.add(libraryInfo)
+        }
+    }
+
+    void loadDependencyLicenseXml(File xmlPath) {
         def dependencies = new XmlParser().parse(xmlPath)
-        dependencies.dependency.each {
-            def filename = it.file.text() as String
-            def libraryInfo = new LibraryInfo()
-            if (aliases.containsKey(filename)) {
-                if (!aliases[filename]) {
-                    // ignore this library
-                    return
-                }
-                libraryInfo.license = normalizeLicense(aliases[filename])
-            } else {
-                libraryInfo.license = normalizeLicense(it.license.@name[0] as String)
-            }
-            libraryInfo.artifactId = it.@name // e.g. com.google.dagger:dagger:2.0
-            libraryInfo.filename = filename // e.g. dagger-2.0.jar
-            dependenciesMap[filename] = libraryInfo
+        dependencies.dependency.each { lib ->
+            def libraryInfo = LibraryInfo.fromXml(lib)
+            dependencyLicenseXml.add(libraryInfo)
         }
     }
 
@@ -91,34 +76,20 @@ class LicenseToolsPlugin implements Plugin<Project> {
         return yaml.load(yamlFile.text) as Map<String, ?> ?: [:]
     }
 
-    Map<String, LibraryInfo> getNotListedInLibrariesYaml() {
-        Map<String, LibraryInfo> notDocumented = [:]
-        dependenciesMap.each { key, value ->
-            if (!librariesMap.containsKey(key)) {
-                notDocumented[key] = value
-            }
-        }
-        return notDocumented
-    }
-
-    Map<String, LibraryInfo> getNotListedInDependencies() {
-        Map<String, LibraryInfo> notUsed = [:]
-        librariesMap.each { key, value ->
-            if (!dependenciesMap.containsKey(key)) {
-                notUsed[key] = value
-            }
-        }
-        return notUsed
-    }
-
     void generateLicensePage(Project project) {
         def ext = project.extensions.getByType(LicenseToolsExtension)
 
         def noLicenseLibraries = new ArrayList<LibraryInfo>()
         def content = new StringBuilder()
-        librariesMap.each { key, libraryInfo ->
-            def o = dependenciesMap.get(key)
-            // merge dependenciesMap's libraryInfo into librariesMap's
+
+        librariesYaml.each { libraryInfo ->
+            if (libraryInfo.skip) {
+                project.logger.info("generateLicensePage: skip ${libraryInfo.name}")
+                return
+            }
+
+            // merge dependencyLicenseXml's libraryInfo into librariesYaml's
+            def o = dependencyLicenseXml.find(libraryInfo.artifactId)
             if (!libraryInfo.license) {
                 libraryInfo.license = o.license
             }
@@ -136,14 +107,14 @@ class LicenseToolsPlugin implements Plugin<Project> {
             message.append("Not enough information for:\n")
             message.append("---\n")
             noLicenseLibraries.each { libraryInfo ->
-                message.append("- filename: ${libraryInfo.filename}\n")
+                message.append("- artifact: ${libraryInfo.artifactId}\n")
                 message.append("  name: ${libraryInfo.name}\n")
                 if (!libraryInfo.license) {
                     message.append("  license: #LICENSE#\n")
                 }
                 if (!libraryInfo.copyrightStatement) {
-                    message.append("  author: #AUTHOR# # (or authors: [...])\n")
-                    message.append("  year: #YEAR# # optional)\n")
+                    message.append("  copyrightHolder: #AUTHOR# (or authors: [...])\n")
+                    message.append("  year: #YEAR# (optional)\n")
                 }
             }
             throw new RuntimeException(message.toString())
@@ -220,25 +191,5 @@ ${makeIndent(content, 4)}
             s.append("\n")
         }
         return s.toString()
-    }
-
-
-    static String normalizeLicense(String name) {
-        switch (name) {
-            case ~/(?i).*\bapache.*2.*/:
-                return "apache2"
-            case ~/(?i).*\bmit\b.*/:
-                return "mit"
-            case ~/(?i).*\bbsd\b.*\b2\b.*/:
-                return "bsd_2_clauses"
-            case ~/(?i).*\bbsd\b.*\b3\b.*/:
-                return "bsd_3_clauses"
-            case ~/(?i).*\bbsd\b.*\b4\b.*/:
-                return "bsd_4_clauses" // not supported because it is a very legacy license
-            case ~/(?i).*\bbsd\b.*/:
-                return "bsd_3_clauses"
-            default:
-                return name
-        }
     }
 }

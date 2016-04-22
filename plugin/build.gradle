@@ -23,6 +23,9 @@ apply plugin: 'groovy'
 apply plugin: 'maven' // to add "plugin:install" to install it locally
 apply plugin: 'com.novoda.bintray-release' // to upload it to bintray
 
+targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_1_8
+
 final metadata = ext.metadata
 final ARTIFACT_ID = "license-tools-plugin"
 
