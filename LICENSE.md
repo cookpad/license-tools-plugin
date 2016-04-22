@@ -1,8 +1,8 @@
-Copyright (c) 2016 Cookpad, Inc. All rights reserved.
+Copyright (c) 2016 Cookpad Inc. All rights reserved.
 
 ---
 
-_Version 2.0, January 2004_  
+_Version 2.0, January 2004_
 _&lt;<http://www.apache.org/licenses/>&gt;_
 
 ### Terms and Conditions for use, reproduction, and distribution
@@ -181,13 +181,13 @@ the same “printed page” as the copyright notice for easier identification wi
 third-party archives.
 
     Copyright [yyyy] [name of copyright owner]
-    
+
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
-    
+
       http://www.apache.org/licenses/LICENSE-2.0
-    
+
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
