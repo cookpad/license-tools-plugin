@@ -48,8 +48,6 @@ class LicenseToolsPlugin implements Plugin<Project> {
             throw new GradleException("checkLicenses: failed")
         }
         checkLicenses.dependsOn('downloadLicenses')
-        project.task('checkLicense').dependsOn(checkLicenses)
-
 
         project.task('generateLicensePage') << {
             initialize(project)
