@@ -1,4 +1,4 @@
-Copyright (c) 2016 Cookpad Inc. All rights reserved.
+Copyright (c) 2016 Cookpad Inc.
 
 ---
 

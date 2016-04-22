@@ -36,7 +36,7 @@ licenseTools {
 }
 
 license {
-    header = project.rootProject.file('LICENSE')
+    header = project.file('../LICENSE.header')
     ignoreFailures = true
 }
 
