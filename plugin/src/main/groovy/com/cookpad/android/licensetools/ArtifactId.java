@@ -37,6 +37,10 @@ public class ArtifactId implements Comparable<ArtifactId> {
         return a.equals("+") || b.equals("+") || a.equals(b);
     }
 
+    public String withWildcardVersion() {
+        return group + ":" + name + ":+";
+    }
+
     @Override
     public String toString() {
         return group + ":" + name + ":" + version;
@@ -76,3 +80,4 @@ public class ArtifactId implements Comparable<ArtifactId> {
         return toString().compareToIgnoreCase(o.toString());
     }
 }
+

@@ -27,25 +27,33 @@ class LicenseToolsPlugin implements Plugin<Project> {
                 project.logger.info("checkLicenses: ok")
                 return
             }
+
+            LicenseToolsExtension ext = project.extensions.findByType(LicenseToolsExtension)
+
             if (notDocumented.size() > 0) {
-                project.logger.warn("# Libraries not listed:")
+                project.logger.warn("# Libraries not listed in ${ext.licensesYaml}:")
                 notDocumented.each { libraryInfo ->
-                    project.logger.warn("- artifact: ${libraryInfo.artifactId} \n  license: ${libraryInfo.license}")
+                    project.logger.warn("""
+- artifact: ${libraryInfo.artifactId.withWildcardVersion()}
+  name: #NAME#
+  copyrightHolder: #AUTHOR#
+  license: ${libraryInfo.license}
+""".trim())
                 }
             }
             if (notInDependencies.size() > 0) {
-                project.logger.warn("# Libraries listed but not in dependencies:")
+                project.logger.warn("# Libraries listed in ${ext.licensesYaml} but not in dependencies:")
                 notInDependencies.each { libraryInfo ->
-                    project.logger.warn("- artifact: ${libraryInfo.artifactId} \n  license: ${libraryInfo.license}")
+                    project.logger.warn("- artifact: ${libraryInfo.artifactId}\n")
                 }
             }
             if (licensesNotMatched.size() > 0) {
                 project.logger.warn("# Licenses not matched with dependency-license.xml:")
                 licensesNotMatched.each { libraryInfo ->
-                    project.logger.warn("- artifact: ${libraryInfo.artifactId} \n  license: ${libraryInfo.license}")
+                    project.logger.warn("- artifact: ${libraryInfo.artifactId}\n  license: ${libraryInfo.license}")
                 }
             }
-            throw new GradleException("checkLicenses: failed")
+            throw new GradleException("checkLicenses: missing libraries in ${ext.licensesYaml}")
         }
         checkLicenses.dependsOn('downloadLicenses')
 
@@ -56,13 +64,17 @@ class LicenseToolsPlugin implements Plugin<Project> {
     }
 
     void initialize(Project project) {
-        loadLibrariesYaml(project)
+        LicenseToolsExtension ext = project.extensions.findByType(LicenseToolsExtension)
+        loadLibrariesYaml(project.file(ext.licensesYaml))
         loadDependencyLicenseXml(project.file("build/reports/license/dependency-license.xml"))
     }
 
-    void loadLibrariesYaml(Project project) {
-        LicenseToolsExtension ext = project.extensions.findByType(LicenseToolsExtension)
-        def libraries = loadYaml(project.file(ext.licensesYaml))
+    void loadLibrariesYaml(File licensesYaml) {
+        if (!licensesYaml.exists()) {
+            return
+        }
+
+        def libraries = loadYaml(licensesYaml)
         for (lib in libraries) {
             def libraryInfo = LibraryInfo.fromYaml(lib)
             librariesYaml.add(libraryInfo)

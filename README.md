@@ -1,76 +1,154 @@
 # Android License Tools Plugin
 
-Gradle Plugin to check library licenses and generate a license page as HTML.
+Gradle Plugin to check library licenses and generate license pages.
 
-## 使い方
+* `./gradlew checkLicenses` to check licenses in dependencies
+* `./gradlew generateLicensePage` to generate a license page `licenses.html`
 
-1. `{project_root}/scripts/license_tools/data`配下に`aliases.yaml`と`libraries.yaml`を作成する
-2. build.gradleに追記  
-  project配下の各moduleをチェックするのでprojectのbuilg.gradleに書きましょう  
-  downloadLicensesタスクがlicense-gradle-pluginに依存しているので併せて読み込みます
+## Setup
 
-  ```
-  buildscript {
-     dependencies {    
-        classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0'
-        classpath 'com.cookpad.android:license-tool:0.2.0'  
-     }  
-  }  
-  apply plugin: 'license'
-  apply plugin: 'license-tool'  
-  ```
-
-3. gradleから実行する  
-
-  `./gradlew clean downloadLicenses checkLicense`
-
-成功時は以下の様なレスポンスが表示されます
-```
-:checkLicense
-OK
+```gradle
+// TBD
 ```
 
-失敗時は以下のように表示されビルドが失敗しますので`aliases.yaml`と`libraries.yaml`を確認してください
-```
-:checkLicense
-# Not used libraries:
-- filename: sample-1.0.0.aar
-  license: [No license found]
-check aliases.yaml
+## How To USe
+
+### Run the `checkLicenses` task
+
+You will see the following messages by `./gradlew checkLicenses`:
+
+```yaml
+# Libraries not listed:
+- artifact: com.android.support:support-v4:+
+  name: #NAME#
+  copyrightHolder: #AUTHOR#
+  license: No license found
+- artifact: com.android.support:animated-vector-drawable:+
+  name: #NAME#
+  copyrightHolder: #AUTHOR#
+  license: No license found
+- artifact: io.reactivex:rxjava:+
+  name: #NAME#
+  copyrightHolder: #AUTHOR#
+  license: apache2
+ ```
+ 
+ ## Add library licenses to `app/licenses.yml`
+
+Then, Create `app/licenses.yml`, and add libraries listed the above with required fields:
+
+```yaml
+- artifact: com.android.support:+:+
+  name: Android Support Libraries
+  copyrightHolder: The Android Open Source Project
+  license: apache2
+- artifact: io.reactivex:rxjava:+
+  name: RxJava
+  copyrightHolder: Netflix, Inc.
+  license: apache2
 ```
 
-## データ
-### aliases.yaml
-`dependency-license.xml`と実際のライセンスとの差を埋める為のファイルです
+You can use wildcards in artifact names and versions.
+You'll know the Android support libraries are groupd in `com.android.support` so you use `com.android.support:+:+` here.
 
-```
-# 'No license found' in dependency-license.xml but actual license is 'Apache License 2.0'
-activeandroid-0.0.20140611-bba53eb.jar: Apache License 2.0
-# Ignore this library.
-adsdk-2.1.0.aar:
-```
+Then, `./gradlew checkLicenses` will passes.
 
-### libraries.yaml
-`licenses.html`作成用のデータソースです
+## Generate `licenses.html` by the `generateLicensePage` task
 
-```
-- filename: line-chart-view-0.2.0.jar
-  license: MIT
-  name: 'line-chart-view'
-  author: hogelog
-  year: 2014
-- filename: httpcore-4.3.2.jar
-  license: Apache License 2.0
-  name: Apache HttpCore
+`./gradlew generateLicensePage` generates `app/src/main/assets/licenses.html`.
+
+This plugin does not provide `Activity` nor `Fragment` to show `licenses.html`. You should add it by yourself.
+
+`example/MainActivity` is an example.
+
+## DataSet Format
+
+### Required Fields
+
+* `artifact`
+* `name`
+* Eighter `copyrightHolder`, `author`, `authors` or `notice`
+
+### Optional Fields
+
+* `year` to indicate copyright years
+* `skip` to skip generating liense entries (for proprietary libraries)
+
+### Example
+
+```yaml
+- artifact: com.android.support:+:+
+  name: Android Support Libraries
+  copyrightHolder: The Android Open Source Project
+  license: apache2
+- artifact: org.abego.treelayout:org.abego.treelayout.core:+
+  name: abego TreeLayout
+  copyrightHolder: abego Software
+  license: bsd_3_clauses
+- artifact: io.reactivex:rxjava:+
+  name: RxJava
+  copyrightHolder: Netflix, Inc.
+  license: apache2
+- artifact: com.tunnelvisionlabs:antlr4-runtime:4.5
+  name: ANTLR4
+  authors:
+    - Terence Parr
+    - Sam Harwell
+  license: bsd_3_clauses
+- artifact: com.github.gfx.android.orma:+:+
+  name: Android Orma
   notice: |
-    Apache HttpComponents
-    Copyright 2006-2014 The Apache Software Foundation
+    Copyright (c) 2015 FUJI Goro (gfx)
+    SQLite.g4 is: Copyright (c) 2014 by Bart Kiers
+  license: apache_2
+- artifact: io.reactivex:rxandroid:1.1.0
+  name: RxAndroid
+  copyrightHolder: The RxAndroid authors
+  license: apache2
+- artifact: license-tools-plugin:example-dep:+
+  skip: true
+```
 
-    This product includes software developed at
-    The Apache Software Foundation (http://www.apache.org/).
-- filename: butterknife-6.1.0.jar
-  license: Apache License 2.0
-  name: Butter Knife
-  author: Jake Wharton
-  year: 2013
+## For Developers
+
+### Release Engineering
+
+To bump versions:
+
+```sh
+./gradlew bumpPatch
+./gradlew bumpMinor
+./gradlew bumpMajor
+```
+
+To test artifacts:
+
+```
+make check
+```
+
+To publish artifacts:
+
+```sh
+make publish
+```
+
+Keep `CHANGES.md` up-to-date.
+
+## Coryright and License
+
+Copyright (c) 2016 Coopkad Inc.
+
+```
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 ```

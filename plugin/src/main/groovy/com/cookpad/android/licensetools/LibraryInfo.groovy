@@ -47,8 +47,16 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
         return libraryInfo
     }
 
+    private String guessNameFromArtifactId() {
+        if (artifactId) {
+            return artifactId.name.substring(0, 1).toUpperCase(Locale.ENGLISH) + artifactId.name.substring(1)
+        } else {
+            return null
+        }
+    }
+
     public String getName() {
-        return libraryName ?: (artifactId as String) ?: filename
+        return libraryName ?: guessNameFromArtifactId() ?: filename
     }
 
     // called from HTML templates

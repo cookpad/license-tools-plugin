@@ -1,5 +1,5 @@
 - artifact: com.android.support:+:+
-  name: Android Support Library
+  name: Android Support Libraries
   copyrightHolder: The Android Open Source Project
   license: apache2
 - artifact: org.abego.treelayout:org.abego.treelayout.core:+
