@@ -1,7 +1,9 @@
-# license-tool-plugin
-OSSライセンスをチェックするプラグイン
+# Android License Tools Plugin
+
+Gradle Plugin to check library licenses and generate a license page as HTML.
 
 ## 使い方
+
 1. `{project_root}/scripts/license_tools/data`配下に`aliases.yaml`と`libraries.yaml`を作成する
 2. build.gradleに追記  
   project配下の各moduleをチェックするのでprojectのbuilg.gradleに書きましょう  
