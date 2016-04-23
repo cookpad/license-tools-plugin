@@ -27,6 +27,8 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
         libraryInfo.libraryName = lib.name as String
         if (lib.copyrightHolder) {
             libraryInfo.copyrightHolder = lib.copyrightHolder
+        } else if (lib.copyrightHolders) {
+            libraryInfo.copyrightHolder = joinWords(lib.copyrightHolders)
         } else if (lib.authors) {
             libraryInfo.copyrightHolder = joinWords(lib.authors)
         } else if (lib.author) {
@@ -103,10 +105,12 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
             return ""
         } else if (words.size() == 1) {
             return words.first()
+        } else if (words.size() == 2) {
+            return "${words.first()} and ${words.last()}"
         } else {
             // example: a, b, c, and d
             String last = words.last()
-            return words.subList(0, words.size() - 2).join(", ") + ", and " + last
+            return words.subList(0, words.size() - 1).join(", ") + ", and " + last
         }
     }
 

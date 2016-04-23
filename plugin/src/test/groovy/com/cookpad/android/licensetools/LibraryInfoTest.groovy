@@ -1,24 +1,19 @@
 package com.cookpad.android.licensetools
 
 import org.junit.Test
-import org.yaml.snakeyaml.Yaml
 
+import static com.cookpad.android.licensetools.LibraryInfo.joinWords
+import static com.cookpad.android.licensetools.LibraryInfo.normalizeLicense
 import static org.junit.Assert.assertEquals
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotEquals
 
-import static com.cookpad.android.licensetools.LibraryInfo.*
-
-public class LicenseToolsPluginTest {
+public class LibraryInfoTest {
 
     @Test
-    public void testSnakeYaml() {
-        def input = '''
-        - 1
-        - apple
-        - orange
-        '''
-        Yaml yaml = new Yaml()
-        assert yaml.load(input) == [1, 'apple', 'orange']
+    public void testJoinWords() throws Exception {
+        assertEquals("foo", joinWords(["foo"]))
+        assertEquals("foo and bar", joinWords(["foo", "bar"]))
+        assertEquals("foo, bar, and baz", joinWords(["foo", "bar", "baz"]))
     }
 
     @Test
