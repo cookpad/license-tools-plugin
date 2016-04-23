@@ -62,6 +62,8 @@ class LicenseToolsPlugin implements Plugin<Project> {
             generateLicensePage(project)
         }
         generateLicensePage.dependsOn('checkLicenses')
+
+        project.tasks.findByName("check").dependsOn('checkLicenses')
     }
 
     void initialize(Project project) {

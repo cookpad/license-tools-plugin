@@ -50,7 +50,7 @@ public class DependencySet implements Iterable<LibraryInfo> {
     public DependencySet notListedIn(DependencySet dependencySet) {
         DependencySet notListed = new DependencySet();
         for (LibraryInfo libraryInfo : this) {
-            if (!dependencySet.contains(libraryInfo.getArtifactId())) {
+            if (!dependencySet.contains(libraryInfo.getArtifactId()) && !libraryInfo.isSkip()) {
                 notListed.add(libraryInfo);
             }
         }
@@ -65,11 +65,19 @@ public class DependencySet implements Iterable<LibraryInfo> {
     public DependencySet licensesNotMatched(DependencySet librariesYaml) {
         DependencySet notMatched = new DependencySet();
         for (LibraryInfo a : librariesYaml) {
+            if (a.isSkip()) {
+                continue;
+            }
+
             if (a.getLicense() == null || a.getLicense().equalsIgnoreCase("no license found")) {
                 continue;
             }
 
             for (LibraryInfo b : findAll(a.getArtifactId())) {
+                if (b.isSkip()) {
+                    continue;
+                }
+
                 if (b.getLicense() == null || b.getLicense().equalsIgnoreCase("no license found")) {
                     continue;
                 }
