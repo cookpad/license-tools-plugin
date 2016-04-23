@@ -8,7 +8,20 @@ Gradle Plugin to check library licenses and generate license pages.
 ## Setup
 
 ```gradle
-// TBD
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.cookpad.android.licensetools:license-tools-plugin:0.6.0'
+    }
+}
+plugins {
+    id "com.github.hierynomus.license" version "0.12.1" // used by license-tools-plugin
+}
+
+apply plugin: 'com.cookpad.android.licensetools'
 ```
 
 ## How To USe
