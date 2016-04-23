@@ -1,15 +1,14 @@
 package com.cookpad.android.licensetools;
 
-import org.antlr.v4.runtime.misc.OrderedHashSet;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class DependencySet implements Iterable<LibraryInfo> {
 
-    private final Set<LibraryInfo> set = new OrderedHashSet<>();
+    private final Set<LibraryInfo> set = new TreeSet<>();
 
     public boolean isEmpty() {
         return set.isEmpty();
