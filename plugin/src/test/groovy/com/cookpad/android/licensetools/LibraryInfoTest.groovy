@@ -62,7 +62,6 @@ public class LibraryInfoTest {
         assertNotEquals("bsd_3_clauses", normalizeLicense("BSD 2 Clauses"))
         assertNotEquals("bsd_3_clauses", normalizeLicense("MIT"))
 
-
         // BSD 2 Clauses
         assertEquals("bsd_2_clauses", normalizeLicense("BSD 2 Clauses"))
         assertEquals("bsd_2_clauses", normalizeLicense("bsd_2_clauses"))
@@ -74,4 +73,23 @@ public class LibraryInfoTest {
         assertEquals("Other", normalizeLicense("Other"))
         assertEquals("No license found", normalizeLicense("No license found"))
     }
+
+    @Test
+    public void testCopyrightStatementWithEndDot() throws Exception {
+        LibraryInfo libraryInfo = LibraryInfo.fromYaml([
+                "copyrightHolder": "Foo Inc.",
+        ])
+
+        assertEquals("Copyright &copy; Foo Inc. All rights reserved.", libraryInfo.copyrightStatement)
+    }
+
+    @Test
+    public void testCopyrightStatementWithoutEndDot() throws Exception {
+        LibraryInfo libraryInfo = LibraryInfo.fromYaml([
+                "copyrightHolder": "Foo",
+        ])
+
+        assertEquals("Copyright &copy; Foo. All rights reserved.", libraryInfo.copyrightStatement)
+    }
+
 }

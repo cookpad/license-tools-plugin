@@ -73,10 +73,11 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
     }
 
     private String buildCopyrightStatement(String copyrightHolder) {
+        def dot = copyrightHolder.endsWith(".") ? "" : "."
         if (year) {
-            return "Copyright &copy; ${year}, ${copyrightHolder}. All rights reserved."
+            return "Copyright &copy; ${year}, ${copyrightHolder}${dot} All rights reserved."
         } else {
-            return "Copyright &copy; ${copyrightHolder}. All rights reserved."
+            return "Copyright &copy; ${copyrightHolder}${dot} All rights reserved."
         }
     }
 
