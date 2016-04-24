@@ -25,7 +25,7 @@
 - artifact: com.github.bumptech.glide:glide:+
   name: Glide
   copyrightHolder: Google Inc.
-  license: bsd_3_clauses
+  license: bsd_2_clauses
 - artifact: com.google.code.gson:gson:+
   name: Gson
   copyrightHolder: Google Inc.

@@ -68,7 +68,7 @@ public class DependencySet implements Iterable<LibraryInfo> {
                 continue;
             }
 
-            if (a.getLicense() == null || a.getLicense().equalsIgnoreCase("no license found")) {
+            if (a.getLicense().equals("")) {
                 continue;
             }
 
@@ -77,11 +77,11 @@ public class DependencySet implements Iterable<LibraryInfo> {
                     continue;
                 }
 
-                if (b.getLicense() == null || b.getLicense().equalsIgnoreCase("no license found")) {
+                if (b.getLicense().equals("")) {
                     continue;
                 }
 
-                if (!a.getLicense().equalsIgnoreCase(b.getLicense())) {
+                if (!a.normalizedLicense().equalsIgnoreCase(b.normalizedLicense())) {
                     notMatched.add(b);
                 }
             }

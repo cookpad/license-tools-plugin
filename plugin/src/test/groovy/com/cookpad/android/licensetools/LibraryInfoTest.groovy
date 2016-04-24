@@ -33,6 +33,7 @@ public class LibraryInfoTest {
         assertEquals("apache2", normalizeLicense("apache2"))
         assertEquals("apache2", normalizeLicense("Apache2"))
         assertEquals("apache2", normalizeLicense("Apache2.0"))
+        assertEquals("apache2", normalizeLicense("The Apache Software License, Version 2.0"))
         assertNotEquals("apache2", normalizeLicense("mit"))
         assertNotEquals("apache2", normalizeLicense("apache license1"))
         assertNotEquals("apache2", normalizeLicense("Apache License1"))
@@ -66,6 +67,7 @@ public class LibraryInfoTest {
         assertEquals("bsd_2_clauses", normalizeLicense("BSD 2 Clauses"))
         assertEquals("bsd_2_clauses", normalizeLicense("bsd_2_clauses"))
         assertEquals("bsd_2_clauses", normalizeLicense("The BSD 2 Clauses License"))
+        assertEquals("bsd_2_clauses", normalizeLicense("Simplified BSD License"))
         assertNotEquals("bsd_2_clauses", normalizeLicense("BSD"))
         assertNotEquals("bsd_2_clauses", normalizeLicense("MIT"))
 

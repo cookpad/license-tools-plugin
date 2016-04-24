@@ -11,7 +11,7 @@ public class Licenses {
     static final SimpleTemplateEngine templateEngine = new SimpleTemplateEngine()
 
     public static String buildHtml(LibraryInfo library) {
-        if (!library.license || library.license.equalsIgnoreCase("no license found")) {
+        if (!library.license) {
             throw new NotEnoughInformationException(library)
         }
         if (!library.copyrightStatement) {
