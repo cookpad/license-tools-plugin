@@ -1,8 +1,13 @@
 package com.cookpad.android.licensetools
 
+import groovy.util.slurpersupport.GPathResult
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Configuration
+import org.gradle.api.artifacts.Dependency
+import org.gradle.api.artifacts.ResolvedArtifact
+import org.xml.sax.helpers.DefaultHandler
 import org.yaml.snakeyaml.Yaml
 
 class LicenseToolsPlugin implements Plugin<Project> {
@@ -10,7 +15,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
     final yaml = new Yaml()
 
     final DependencySet librariesYaml = new DependencySet() // based on libraries.yml
-    final DependencySet dependencyLicenseXml = new DependencySet() // based on license plugin's dependency-license.xml
+    final DependencySet dependencyLicenses = new DependencySet() // based on license plugin's dependency-license.xml
 
     @Override
     void apply(Project project) {
@@ -19,9 +24,9 @@ class LicenseToolsPlugin implements Plugin<Project> {
         def checkLicenses = project.task('checkLicenses') << {
             initialize(project)
 
-            def notDocumented = dependencyLicenseXml.notListedIn(librariesYaml)
-            def notInDependencies = librariesYaml.notListedIn(dependencyLicenseXml)
-            def licensesNotMatched = dependencyLicenseXml.licensesNotMatched(librariesYaml)
+            def notDocumented = dependencyLicenses.notListedIn(librariesYaml)
+            def notInDependencies = librariesYaml.notListedIn(dependencyLicenses)
+            def licensesNotMatched = dependencyLicenses.licensesNotMatched(librariesYaml)
 
             if (notDocumented.empty && notInDependencies.empty && licensesNotMatched.empty) {
                 project.logger.info("checkLicenses: ok")
@@ -33,12 +38,15 @@ class LicenseToolsPlugin implements Plugin<Project> {
             if (notDocumented.size() > 0) {
                 project.logger.warn("# Libraries not listed in ${ext.licensesYaml}:")
                 notDocumented.each { libraryInfo ->
-                    project.logger.warn("""
-- artifact: ${libraryInfo.artifactId.withWildcardVersion()}
-  name: #NAME#
-  copyrightHolder: #AUTHOR#
-  license: ${libraryInfo.license}
-""".trim())
+                    def message = new StringBuffer()
+                    message.append("- artifact: ${libraryInfo.artifactId.withWildcardVersion()}\n")
+                    message.append("  name: ${libraryInfo.name ?: "#NAME#"}\n")
+                    message.append("  copyrightHolder: ${libraryInfo.copyrightHolder ?: "#COPYRIGHT_HOLDER#"}\n")
+                    message.append("  license: ${libraryInfo.license ?: "#LICENSE#"}\n")
+                    if (libraryInfo.url) {
+                        message.append("  url: ${libraryInfo.url ?: "#URL#"}\n")
+                    }
+                    project.logger.warn(message.toString().trim())
                 }
             }
             if (notInDependencies.size() > 0) {
@@ -48,14 +56,13 @@ class LicenseToolsPlugin implements Plugin<Project> {
                 }
             }
             if (licensesNotMatched.size() > 0) {
-                project.logger.warn("# Licenses not matched with dependency-license.xml:")
+                project.logger.warn("# Licenses not matched with pom.xml in dependencies:")
                 licensesNotMatched.each { libraryInfo ->
                     project.logger.warn("- artifact: ${libraryInfo.artifactId}\n  license: ${libraryInfo.license}")
                 }
             }
             throw new GradleException("checkLicenses: missing libraries in ${ext.licensesYaml}")
         }
-        checkLicenses.dependsOn('downloadLicenses')
 
         def generateLicensePage = project.task('generateLicensePage') << {
             initialize(project)
@@ -69,7 +76,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
     void initialize(Project project) {
         LicenseToolsExtension ext = project.extensions.findByType(LicenseToolsExtension)
         loadLibrariesYaml(project.file(ext.licensesYaml))
-        loadDependencyLicenseXml(project.file("build/reports/license/dependency-license.xml"))
+        loadDependencyLicenses(project)
     }
 
     void loadLibrariesYaml(File licensesYaml) {
@@ -84,11 +91,47 @@ class LicenseToolsPlugin implements Plugin<Project> {
         }
     }
 
-    void loadDependencyLicenseXml(File xmlPath) {
-        def dependencies = new XmlParser().parse(xmlPath)
-        dependencies.dependency.each { lib ->
-            def libraryInfo = LibraryInfo.fromXml(lib)
-            dependencyLicenseXml.add(libraryInfo)
+    void loadDependencyLicenses(Project project) {
+        resolveProjectDependencies(project).each { d ->
+            if (d.moduleVersion.id.version == "unspecified") {
+                return
+            }
+
+            def dependencyDesc = "$d.moduleVersion.id.group:$d.moduleVersion.id.name:$d.moduleVersion.id.version"
+
+            def libraryInfo = new LibraryInfo()
+            libraryInfo.artifactId = ArtifactId.parse(dependencyDesc)
+            libraryInfo.filename = d.file
+            dependencyLicenses.add(libraryInfo)
+
+            Dependency pomDependency = project.dependencies.create("$dependencyDesc@pom")
+            Configuration pomConfiguration = project.configurations.detachedConfiguration(pomDependency)
+
+            pomConfiguration.resolve().each {
+                project.logger.info("POM: ${it}")
+            }
+
+            File pStream
+            try {
+                pStream = pomConfiguration.resolve().asList().first()
+            } catch (Exception e) {
+                project.logger.warn("Unable to retrieve license for $dependencyDesc")
+                return
+            }
+
+            XmlSlurper slurper = new XmlSlurper(true, false)
+            slurper.setErrorHandler(new DefaultHandler())
+            GPathResult xml = slurper.parse(pStream)
+
+            libraryInfo.libraryName = xml.name.text()
+            libraryInfo.url = xml.url.text()
+
+            xml.licenses.license.each {
+                if (!libraryInfo.license) {
+                    // takes the first license
+                    libraryInfo.license = it.name.text().trim()
+                }
+            }
         }
     }
 
@@ -108,8 +151,8 @@ class LicenseToolsPlugin implements Plugin<Project> {
                 return
             }
 
-            // merge dependencyLicenseXml's libraryInfo into librariesYaml's
-            def o = dependencyLicenseXml.find(libraryInfo.artifactId)
+            // merge dependencyLicenses's libraryInfo into librariesYaml's
+            def o = dependencyLicenses.find(libraryInfo.artifactId)
             if (!libraryInfo.license) {
                 libraryInfo.license = o.license
             }
@@ -211,5 +254,29 @@ ${makeIndent(content, 4)}
             s.append("\n")
         }
         return s.toString()
+    }
+
+    // originated from https://github.com/hierynomus/license-gradle-plugin DependencyResolver.groovy
+    Set<ResolvedArtifact> resolveProjectDependencies(Project project) {
+        def dependenciesToIgnore = new HashSet<String>()
+
+        def dependencyConfiguration = "compile"
+
+        def dependenciesToHandle = new HashSet<ResolvedArtifact>()
+        def subprojects = project.rootProject.subprojects.groupBy { Project p -> "$p.group:$p.name:$p.version" }
+
+        def runtimeConfiguration = project.configurations.getByName(dependencyConfiguration)
+        runtimeConfiguration.resolvedConfiguration.resolvedArtifacts.each { ResolvedArtifact d ->
+            String dependencyDesc = "$d.moduleVersion.id.group:$d.moduleVersion.id.name:$d.moduleVersion.id.version"
+            if (!dependenciesToIgnore.contains(dependencyDesc)) {
+                Project subproject = subprojects[dependencyDesc]?.first()
+                dependenciesToHandle.add(d)
+                if (subproject) {
+                    dependenciesToHandle.addAll(resolveProjectDependencies(subproject))
+                }
+            }
+        }
+
+        return dependenciesToHandle
     }
 }

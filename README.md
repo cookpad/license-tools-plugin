@@ -17,12 +17,11 @@ buildscript {
         classpath 'com.cookpad.android.licensetools:license-tools-plugin:0.7.0'
     }
 }
-plugins {
-    id "com.github.hierynomus.license" version "0.12.1" // used by license-tools-plugin
-}
 
 apply plugin: 'com.cookpad.android.licensetools'
 ```
+
+See [example/build.gradle] for example.
 
 ## How To USe
 

@@ -11,14 +11,14 @@ public class Licenses {
     static final SimpleTemplateEngine templateEngine = new SimpleTemplateEngine()
 
     public static String buildHtml(LibraryInfo library) {
-        if (!library.license || library.license.equalsIgnoreCase("no license found")) {
+        if (!library.license) {
             throw new NotEnoughInformationException(library)
         }
         if (!library.copyrightStatement) {
             throw new NotEnoughInformationException(library)
         }
 
-        def templateFile = "template/${library.license}.html"
+        def templateFile = "template/${library.normalizedLicense}.html"
         return templateEngine.createTemplate(readResourceContent(templateFile)).make([
                 "library": library
         ])
