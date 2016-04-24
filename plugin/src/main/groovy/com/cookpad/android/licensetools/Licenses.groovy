@@ -18,7 +18,7 @@ public class Licenses {
             throw new NotEnoughInformationException(library)
         }
 
-        def templateFile = "template/${library.license}.html"
+        def templateFile = "template/${library.normalizedLicense}.html"
         return templateEngine.createTemplate(readResourceContent(templateFile)).make([
                 "library": library
         ])

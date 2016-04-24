@@ -81,7 +81,7 @@ public class DependencySet implements Iterable<LibraryInfo> {
                     continue;
                 }
 
-                if (!a.normalizedLicense().equalsIgnoreCase(b.normalizedLicense())) {
+                if (!a.getNormalizedLicense().equalsIgnoreCase(b.getNormalizedLicense())) {
                     notMatched.add(b);
                 }
             }

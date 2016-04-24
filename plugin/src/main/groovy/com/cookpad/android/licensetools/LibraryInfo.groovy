@@ -74,7 +74,7 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
         }
     }
 
-    public String normalizedLicense() {
+    public String getNormalizedLicense() {
         return normalizeLicense(license ?: "")
     }
 
