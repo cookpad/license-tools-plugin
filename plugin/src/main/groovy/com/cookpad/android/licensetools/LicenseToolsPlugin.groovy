@@ -21,7 +21,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.extensions.add(LicenseToolsExtension.NAME, LicenseToolsExtension)
 
-        project.task('checkLicenses') << {
+        def checkLicenses = project.task('checkLicenses') << {
             initialize(project)
 
             def notDocumented = dependencyLicenses.notListedIn(librariesYaml)
