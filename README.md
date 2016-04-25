@@ -45,7 +45,7 @@ You will see the following messages by `./gradlew checkLicenses`:
   license: apache2
  ```
  
- ## Add library licenses to `app/licenses.yml`
+## Add library licenses to `app/licenses.yml`
 
 Then, Create `app/licenses.yml`, and add libraries listed the above with required fields:
 
