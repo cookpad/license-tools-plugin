@@ -2,10 +2,6 @@
   name: Android Support Libraries
   copyrightHolder: The Android Open Source Project
   license: apache2
-- artifact: org.abego.treelayout:org.abego.treelayout.core:+
-  name: abego TreeLayout
-  copyrightHolder: abego Software
-  license: bsd_3_clauses
 - artifact: io.reactivex:rxjava:+
   name: RxJava
   copyrightHolder: Netflix, Inc.
