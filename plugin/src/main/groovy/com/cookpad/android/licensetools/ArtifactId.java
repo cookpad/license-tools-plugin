@@ -55,16 +55,8 @@ public class ArtifactId implements Comparable<ArtifactId> {
             return false;
         }
 
-        ArtifactId artifactId = (ArtifactId) o;
-
-        if (!group.equals(artifactId.group)) {
-            return false;
-        }
-        if (!this.name.equals(artifactId.name)) {
-            return false;
-        }
-        return version.equals(artifactId.version);
-
+        ArtifactId that = (ArtifactId) o;
+        return this.matches(that);
     }
 
     @Override
