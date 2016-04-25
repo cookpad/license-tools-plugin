@@ -36,7 +36,7 @@ def updateReadme(oldVersion, newVersion) {
 task bumpMajor << {
     def oldVersion = versionName
     def versionParts = versionName.split(/\./)
-    versionParts[0]++
+    versionParts[0] = (versionParts[0] as int) + 1
     def newVersion = "${versionParts[0]}.0.0"
     versionFile.write(newVersion + "\n")
     updateReadme(oldVersion, newVersion)
@@ -46,7 +46,7 @@ task bumpMajor << {
 task bumpMinor << {
     def oldVersion = versionName
     def versionParts = versionName.split(/\./)
-    versionParts[1]++
+    versionParts[1] = (versionParts[1] as int) + 1
     def newVersion = "${versionParts[0]}.${versionParts[1]}.0"
     versionFile.write(newVersion + "\n")
     updateReadme(oldVersion, newVersion)
@@ -56,7 +56,7 @@ task bumpMinor << {
 task bumpPatch << {
     def oldVersion = versionName
     def versionParts = versionName.split(/\./)
-    versionParts[2]++
+    versionParts[2] = (versionParts[2] as int) + 1
     def newVersion = "${versionParts[0]}.${versionParts[1]}.${versionParts[2]}"
     versionFile.write(newVersion + "\n")
     updateReadme(oldVersion, newVersion)
