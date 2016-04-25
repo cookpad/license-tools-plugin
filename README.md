@@ -45,7 +45,7 @@ You will see the following messages by `./gradlew checkLicenses`:
   license: apache2
  ```
  
-## Add library licenses to `app/licenses.yml`
+### Add library licenses to `app/licenses.yml`
 
 Then, Create `app/licenses.yml`, and add libraries listed the above with required fields:
 
@@ -65,7 +65,7 @@ You'll know the Android support libraries are groupd in `com.android.support` so
 
 Then, `./gradlew checkLicenses` will passes.
 
-## Generate `licenses.html` by the `generateLicensePage` task
+### Generate `licenses.html` by the `generateLicensePage` task
 
 `./gradlew generateLicensePage` generates `app/src/main/assets/licenses.html`.
 
