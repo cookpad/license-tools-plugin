@@ -32,3 +32,5 @@
   license: apache2
 - artifact: com.google.android.gms:+:+
   skip: true
+- artifact: com.android.databinding:+:+
+  skip: true
