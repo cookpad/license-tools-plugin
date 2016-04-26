@@ -6,11 +6,11 @@ import groovy.transform.CompileStatic
 import java.util.zip.ZipFile
 
 @CompileStatic
-public class Licenses {
+public class Templates {
 
     static final SimpleTemplateEngine templateEngine = new SimpleTemplateEngine()
 
-    public static String buildHtml(LibraryInfo library) {
+    public static String buildLicenseHtml(LibraryInfo library) {
         if (!library.license) {
             throw new NotEnoughInformationException(library)
         }
@@ -18,14 +18,33 @@ public class Licenses {
             throw new NotEnoughInformationException(library)
         }
 
-        def templateFile = "template/${library.normalizedLicense}.html"
+        def templateFile = "template/licenses/${library.normalizedLicense}.html"
         return templateEngine.createTemplate(readResourceContent(templateFile)).make([
                 "library": library
         ])
     }
 
+    public static String wrapWithLayout(CharSequence content) {
+        def templateFile = "template/layout.html"
+        return templateEngine.createTemplate(readResourceContent(templateFile)).make([
+                "content": makeIndent(content, 4)
+        ])
+    }
+
+    static String makeIndent(CharSequence content, int level) {
+        def s = new StringBuilder()
+        content.eachLine { line ->
+            for (int i = 0; i < level; i++) {
+                s.append(" ")
+            }
+            s.append(line)
+            s.append("\n")
+        }
+        return s.toString()
+    }
+
     static String readResourceContent(String filename) {
-        def templateFileUrl = Licenses.class.getClassLoader().getResource(filename)
+        def templateFileUrl = Templates.class.getClassLoader().getResource(filename)
         if (templateFileUrl == null) {
             throw new FileNotFoundException("File not found: $filename")
         }

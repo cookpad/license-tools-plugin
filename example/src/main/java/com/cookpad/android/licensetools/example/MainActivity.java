@@ -15,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
 
         WebView webView = (WebView) findViewById(R.id.webView);
         assert webView != null;
+
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
         webView.loadUrl(LICENSES_HTML_PATH);
     }
 }

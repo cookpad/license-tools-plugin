@@ -159,7 +159,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
             libraryInfo.filename = o.filename
             libraryInfo.artifactId = o.artifactId
             try {
-                content.append(Licenses.buildHtml(libraryInfo));
+                content.append(Templates.buildLicenseHtml(libraryInfo));
             } catch (NotEnoughInformationException e) {
                 noLicenseLibraries.add(e.libraryInfo)
             }
@@ -188,72 +188,8 @@ class LicenseToolsPlugin implements Plugin<Project> {
             assetsDir.mkdirs()
         }
 
-        project.file("${assetsDir}/${ext.outputHtml}").write(wrapHtml(content))
-    }
-
-    static String wrapHtml(CharSequence content) {
-        return """<!DOCTYPE html>
-<html>
-  <head>
-    <style>
-      body {
-        color: #4c4a40;
-        font-size: 87.5%;
-      }
-      .header, .library {
-        margin: 1em 0;
-        padding: 0 0.5em;
-        border-bottom: 1px solid #ebeae6;
-      }
-      .title {
-        font-size: 129%;
-        font-weight: bold;
-        margin: 1em 0
-      }
-      .license {
-        background-color: #f7f7f9;
-        border-radius: 4px;
-        border: 1px solid #e1e1e8;
-        font-size: 80%;
-        padding: 9px 14px;
-        margin-bottom: 14px;
-      }
-      .license h1, .license h2 {
-        font-size: 100%;
-        font-weight: bold;
-      }
-      .license .inline {
-        display: inline;
-      }
-      .license .block {
-        margin: 1em 0;
-      }
-      .license pre {
-        white-space: pre-wrap;
-      }
-      .license .low-alpha {
-        list-style-type: lower-alpha;
-        padding-left: 2em;
-      }
-    </style>
-  </head>
-  <body>
-${makeIndent(content, 4)}
-  </body>
-</html>
-"""
-    }
-
-    static String makeIndent(CharSequence content, int level) {
-        def s = new StringBuilder()
-        content.eachLine { line ->
-            for (int i = 0; i < level; i++) {
-                s.append(" ")
-            }
-            s.append(line)
-            s.append("\n")
-        }
-        return s.toString()
+        project.logger.info("render ${assetsDir}/${ext.outputHtml}")
+        project.file("${assetsDir}/${ext.outputHtml}").write(Templates.wrapWithLayout(content))
     }
 
     // originated from https://github.com/hierynomus/license-gradle-plugin DependencyResolver.groovy
