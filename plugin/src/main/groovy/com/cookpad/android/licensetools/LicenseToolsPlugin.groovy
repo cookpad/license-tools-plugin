@@ -64,6 +64,11 @@ class LicenseToolsPlugin implements Plugin<Project> {
             throw new GradleException("checkLicenses: missing libraries in ${ext.licensesYaml}")
         }
 
+        checkLicenses.configure {
+            group = "Verification"
+            description = 'Check not documented licenses in licenses.yml'
+        }
+
         def generateLicensePage = project.task('generateLicensePage') << {
             initialize(project)
             generateLicensePage(project)
