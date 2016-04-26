@@ -88,4 +88,13 @@ public class DependencySet implements Iterable<LibraryInfo> {
         }
         return notMatched;
     }
+
+    @Override
+    public String toString() {
+        List<String> list = new ArrayList<>();
+        for (LibraryInfo libraryInfo : this) {
+            list.add(libraryInfo.getArtifactId().toString());
+        }
+        return list.toString();
+    }
 }

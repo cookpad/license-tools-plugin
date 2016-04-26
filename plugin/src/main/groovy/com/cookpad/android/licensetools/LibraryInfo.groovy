@@ -44,7 +44,11 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
 
     private String getNameFromArtifactId() {
         if (artifactId) {
-            return artifactId.name
+            if (artifactId.name != "+") {
+                return artifactId.name
+            } else {
+                return artifactId.group
+            }
         } else {
             return null
         }
