@@ -6,6 +6,10 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
 
+    dataBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.cookpad.android.licensetools.example"
         minSdkVersion 16
@@ -25,6 +29,9 @@ android {
     }
     lintOptions {
         disable 'InvalidPackage'
+    }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 }
 
