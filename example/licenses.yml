@@ -30,7 +30,5 @@
   name: RxAndroid
   copyrightHolder: The RxAndroid authors
   license: apache2
-- artifact: license-tools-plugin:example-dep:+
-  skip: true
 - artifact: com.google.android.gms:+:+
   skip: true
