@@ -7,6 +7,8 @@ Gradle Plugin to check library licenses and generate license pages.
 
 ## Setup
 
+This plugin requires JDK8 (1.8.0 or later).
+
 ```gradle
 buildscript {
     repositories {
@@ -120,6 +122,10 @@ This plugin does not provide `Activity` nor `Fragment` to show `licenses.html`. 
 - artifact: license-tools-plugin:example-dep:+
   skip: true
 ```
+
+## See Also
+
+- [オープンソースライセンスの管理を楽にする -Android アプリ編 - クックパッド開発者ブログ](http://techlife.cookpad.com/entry/2016/04/28/183000)
 
 ## For Developers
 
