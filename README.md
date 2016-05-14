@@ -1,4 +1,4 @@
-# Android License Tools Plugin
+# Android License Tools Plugin [![CircleCI](https://circleci.com/gh/cookpad/license-tools-plugin.svg?style=svg)](https://circleci.com/gh/cookpad/license-tools-plugin) [ ![Download](https://api.bintray.com/packages/cookpad-inc/maven/license-tools-plugin/images/download.svg) ](https://bintray.com/cookpad-inc/maven/license-tools-plugin/_latestVersion)
 
 Gradle Plugin to check library licenses and generate license pages.
 
