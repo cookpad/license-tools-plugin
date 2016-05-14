@@ -1,0 +1,13 @@
+machine:
+  java:
+    version: oraclejdk8
+  environment:
+    TERM: dumb
+dependencies:
+  pre:
+      - echo y | android -s update sdk -u -a -t "tools"
+      - echo y | android -s update sdk -u -a -t "build-tools-23.0.3,android-23"
+      - echo y | android -s update sdk -u -a -t "extra-android-m2repository,extra-google-m2repository"
+test:
+  override:
+    - ./gradlew --info check
