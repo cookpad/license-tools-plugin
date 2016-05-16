@@ -34,3 +34,7 @@
   skip: true
 - artifact: com.android.databinding:+:+
   skip: true
+- artifact: com.squareup.picasso:picasso:+
+  name: Picasso
+  copyrightHolder: Square, Inc.
+  license: apache2
