@@ -199,19 +199,22 @@ class LicenseToolsPlugin implements Plugin<Project> {
 
     // originated from https://github.com/hierynomus/license-gradle-plugin DependencyResolver.groovy
     Set<ResolvedArtifact> resolveProjectDependencies(Project project) {
-        def dependenciesToIgnore = new HashSet<String>()
-
-        def dependencyConfiguration = "compile"
-
-        def dependenciesToHandle = new HashSet<ResolvedArtifact>()
         def subprojects = project.rootProject.subprojects.groupBy { Project p -> "$p.group:$p.name:$p.version" }
 
-        def runtimeConfiguration = project.configurations.getByName(dependencyConfiguration)
-        runtimeConfiguration.resolvedConfiguration.resolvedArtifacts.each { ResolvedArtifact d ->
+        List<ResolvedArtifact> runtimeDependencies = project.configurations.all.findAll { Configuration c ->
+            c.name.matches(/^(?:release\w*)?[cC]ompile$/) // compile, releaseCompile, releaseProductionCompile, and so on.
+        }.collect {
+            it.resolvedConfiguration.resolvedArtifacts
+        }.flatten() as List<ResolvedArtifact>
+
+        def seen = new HashSet<String>()
+        def dependenciesToHandle = new HashSet<ResolvedArtifact>()
+        runtimeDependencies.each { ResolvedArtifact d ->
             String dependencyDesc = "$d.moduleVersion.id.group:$d.moduleVersion.id.name:$d.moduleVersion.id.version"
-            if (!dependenciesToIgnore.contains(dependencyDesc)) {
-                Project subproject = subprojects[dependencyDesc]?.first()
+            if (!seen.contains(dependencyDesc)) {
                 dependenciesToHandle.add(d)
+
+                Project subproject = subprojects[dependencyDesc]?.first()
                 if (subproject) {
                     dependenciesToHandle.addAll(resolveProjectDependencies(subproject))
                 }
