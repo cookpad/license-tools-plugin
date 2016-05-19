@@ -66,7 +66,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
 
         checkLicenses.configure {
             group = "Verification"
-            description = 'Check not documented licenses in licenses.yml'
+            description = 'Check whether dependency licenses are listed in licenses.yml'
         }
 
         def generateLicensePage = project.task('generateLicensePage') << {
