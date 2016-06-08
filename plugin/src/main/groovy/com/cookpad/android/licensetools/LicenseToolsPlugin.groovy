@@ -163,6 +163,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
             }
             libraryInfo.filename = o.filename
             libraryInfo.artifactId = o.artifactId
+            libraryInfo.url = o.url.isEmpty() ? libraryInfo.url ?: "" : o.url
             try {
                 content.append(Templates.buildLicenseHtml(libraryInfo));
             } catch (NotEnoughInformationException e) {
