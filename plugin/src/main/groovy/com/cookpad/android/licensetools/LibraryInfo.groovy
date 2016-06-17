@@ -39,6 +39,7 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
         libraryInfo.license = lib.license ?: ""
         libraryInfo.notice = lib.notice as String
         libraryInfo.skip = lib.skip as boolean
+        libraryInfo.url = lib.url as String
         return libraryInfo
     }
 

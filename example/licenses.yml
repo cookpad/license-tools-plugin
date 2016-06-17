@@ -6,6 +6,7 @@
   name: RxJava
   copyrightHolder: Netflix, Inc.
   license: apache2
+  url: "https://github.com/ReactiveX/RxJava"
 - artifact: com.tunnelvisionlabs:antlr4-runtime:4.5
   name: ANTLR4
   authors:
@@ -22,6 +23,7 @@
   name: Glide
   copyrightHolder: Google Inc.
   license: bsd_2_clauses
+  url: "https://github.com/bumptech/glide"
 - artifact: com.google.code.gson:gson:+
   name: Gson
   copyrightHolder: Google Inc.
@@ -30,6 +32,7 @@
   name: RxAndroid
   copyrightHolder: The RxAndroid authors
   license: apache2
+  url: "https://github.com/ReactiveX/RxAndroid"
 - artifact: com.google.android.gms:+:+
   skip: true
 - artifact: com.android.databinding:+:+
