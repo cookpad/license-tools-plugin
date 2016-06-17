@@ -1,6 +1,7 @@
 <div class="library">
   <!-- https://opensource.org/licenses/mit-license.html -->
   <h1 class="title">${library.name}</h1>
+  <% print library.url.isEmpty() ? "" : """<p><a href="${library.url}">${library.url}</a></p>""" %>
   <div class="license">
     <h2>The MIT License (MIT)</h2>
     <p>${library.copyrightStatement}</p>
