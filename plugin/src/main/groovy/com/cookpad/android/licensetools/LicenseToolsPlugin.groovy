@@ -9,6 +9,7 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ResolvedArtifact
 import org.xml.sax.helpers.DefaultHandler
 import org.yaml.snakeyaml.Yaml
+import groovy.json.JsonBuilder
 
 class LicenseToolsPlugin implements Plugin<Project> {
 
@@ -74,6 +75,12 @@ class LicenseToolsPlugin implements Plugin<Project> {
             generateLicensePage(project)
         }
         generateLicensePage.dependsOn('checkLicenses')
+
+        def generateLicenseJson = project.task('generateLicenseJson') << {
+            initialize(project)
+            generateLicenseJson(project)
+        }
+        generateLicenseJson.dependsOn('checkLicenses')
 
         project.tasks.findByName("check").dependsOn('checkLicenses')
     }
@@ -171,23 +178,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
             }
         }
 
-        if (!noLicenseLibraries.empty) {
-            StringBuilder message = new StringBuilder();
-            message.append("Not enough information for:\n")
-            message.append("---\n")
-            noLicenseLibraries.each { libraryInfo ->
-                message.append("- artifact: ${libraryInfo.artifactId}\n")
-                message.append("  name: ${libraryInfo.name}\n")
-                if (!libraryInfo.license) {
-                    message.append("  license: #LICENSE#\n")
-                }
-                if (!libraryInfo.copyrightStatement) {
-                    message.append("  copyrightHolder: #AUTHOR# (or authors: [...])\n")
-                    message.append("  year: #YEAR# (optional)\n")
-                }
-            }
-            throw new RuntimeException(message.toString())
-        }
+        assertEmptyLibraries(noLicenseLibraries)
 
         def assetsDir = project.file("src/main/assets")
         if (!assetsDir.exists()) {
@@ -196,6 +187,88 @@ class LicenseToolsPlugin implements Plugin<Project> {
 
         project.logger.info("render ${assetsDir}/${ext.outputHtml}")
         project.file("${assetsDir}/${ext.outputHtml}").write(Templates.wrapWithLayout(content))
+    }
+
+    void generateLicenseJson(Project project) {
+        def ext = project.extensions.getByType(LicenseToolsExtension)
+        def noLicenseLibraries = new ArrayList<LibraryInfo>()
+
+        def json = new JsonBuilder()
+        def librariesArray = []
+
+        librariesYaml.each { libraryInfo ->
+            if (libraryInfo.skip) {
+                project.logger.info("generateLicensePage: skip ${libraryInfo.name}")
+                return
+            }
+
+            // merge dependencyLicenses's libraryInfo into librariesYaml's
+            def o = dependencyLicenses.find(libraryInfo.artifactId)
+            if (!libraryInfo.license) {
+                libraryInfo.license = o.license
+            }
+            // libraryInfo.filename = o.filename
+            libraryInfo.artifactId = o.artifactId
+            libraryInfo.url = o.url.isEmpty() ? libraryInfo.url ?: "" : o.url
+            try {
+                Templates.assertLicenseAndStatement(libraryInfo)
+                librariesArray << libraryInfo
+            } catch (NotEnoughInformationException e) {
+                noLicenseLibraries.add(e.libraryInfo)
+            }
+        }
+
+        assertEmptyLibraries(noLicenseLibraries)
+
+        def assetsDir = project.file("src/main/assets")
+        if (!assetsDir.exists()) {
+            assetsDir.mkdirs()
+        }
+
+        json {
+            libraries librariesArray.collect {
+                l ->
+                    return [
+                        notice: l.notice,
+                        copyrightHolder: l.copyrightHolder,
+                        copyrightStatement: l.copyrightStatement,
+                        license: l.license,
+                        normalizedLicense: l.normalizedLicense,
+                        year: l.year,
+                        url: l.url,
+                        libraryName: l.libraryName,
+                        // I don't why artifactId won't serialize, and this is the only way
+                        // I've found -- vishna
+                        artifactId: [
+                                name: l.artifactId.name,
+                                group: l.artifactId.group,
+                                version: l.artifactId.version,
+                        ]
+                    ]
+            }
+        }
+
+        project.logger.info("render ${assetsDir}/${ext.outputJson}")
+        project.file("${assetsDir}/${ext.outputJson}").write(json.toString())
+    }
+
+    static void assertEmptyLibraries(ArrayList<LibraryInfo> noLicenseLibraries) {
+        if (noLicenseLibraries.empty) return;
+        StringBuilder message = new StringBuilder();
+        message.append("Not enough information for:\n")
+        message.append("---\n")
+        noLicenseLibraries.each { libraryInfo ->
+            message.append("- artifact: ${libraryInfo.artifactId}\n")
+            message.append("  name: ${libraryInfo.name}\n")
+            if (!libraryInfo.license) {
+                message.append("  license: #LICENSE#\n")
+            }
+            if (!libraryInfo.copyrightStatement) {
+                message.append("  copyrightHolder: #AUTHOR# (or authors: [...])\n")
+                message.append("  year: #YEAR# (optional)\n")
+            }
+        }
+        throw new RuntimeException(message.toString())
     }
 
     // originated from https://github.com/hierynomus/license-gradle-plugin DependencyResolver.groovy
