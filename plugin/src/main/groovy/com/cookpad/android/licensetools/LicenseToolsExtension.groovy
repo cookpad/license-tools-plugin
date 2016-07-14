@@ -8,4 +8,5 @@ public class LicenseToolsExtension {
 
     public File outputHtml = new File("licenses.html");
 
+    public File outputJson = new File("licenses.json");
 }

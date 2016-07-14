@@ -11,17 +11,21 @@ public class Templates {
     static final SimpleTemplateEngine templateEngine = new SimpleTemplateEngine()
 
     public static String buildLicenseHtml(LibraryInfo library) {
+        assertLicenseAndStatement(library)
+
+        def templateFile = "template/licenses/${library.normalizedLicense}.html"
+        return templateEngine.createTemplate(readResourceContent(templateFile)).make([
+                "library": library
+        ])
+    }
+
+    public static void assertLicenseAndStatement(LibraryInfo library) {
         if (!library.license) {
             throw new NotEnoughInformationException(library)
         }
         if (!library.copyrightStatement) {
             throw new NotEnoughInformationException(library)
         }
-
-        def templateFile = "template/licenses/${library.normalizedLicense}.html"
-        return templateEngine.createTemplate(readResourceContent(templateFile)).make([
-                "library": library
-        ])
     }
 
     public static String wrapWithLayout(CharSequence content) {
