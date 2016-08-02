@@ -98,6 +98,8 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
                 return "bsd_4_clauses" // not supported because it is a very legacy license
             case ~/(?i).*\bbsd\b.*/:
                 return "bsd_3_clauses"
+            case ~/(?i).*\bisc\b.*/:
+                return "isc"
             default:
                 return name
         }
