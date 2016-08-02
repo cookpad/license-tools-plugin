@@ -71,6 +71,14 @@ public class LibraryInfoTest {
         assertNotEquals("bsd_2_clauses", normalizeLicense("BSD"))
         assertNotEquals("bsd_2_clauses", normalizeLicense("MIT"))
 
+        // ISC
+        assertEquals("isc", normalizeLicense("isc"))
+        assertEquals("isc", normalizeLicense("Isc"))
+        assertEquals("isc", normalizeLicense("ISC"))
+        assertEquals("isc", normalizeLicense("The ISC License"))
+        assertNotEquals("isc", normalizeLicense("Apache 2.0 License"))
+        assertNotEquals("isc", normalizeLicense("MIT"))
+
         // Other
         assertEquals("Other", normalizeLicense("Other"))
         assertEquals("No license found", normalizeLicense("No license found"))
