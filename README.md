@@ -26,7 +26,7 @@ apply plugin: 'com.cookpad.android.licensetools'
 
 See [example/build.gradle] for example.
 
-## How To USe
+## How To Use
 
 ### Run the `checkLicenses` task
 
@@ -64,7 +64,7 @@ Then, Create `app/licenses.yml`, and add libraries listed the above with require
 ```
 
 You can use wildcards in artifact names and versions.
-You'll know the Android support libraries are groupd in `com.android.support` so you use `com.android.support:+:+` here.
+You'll know the Android support libraries are grouped in `com.android.support` so you use `com.android.support:+:+` here.
 
 Then, `./gradlew checkLicenses` will passes.
 
@@ -82,12 +82,12 @@ This plugin does not provide `Activity` nor `Fragment` to show `licenses.html`. 
 
 * `artifact`
 * `name`
-* Eighter `copyrightHolder`, `author`, `authors` or `notice`
+* Either `copyrightHolder`, `author`, `authors` or `notice`
 
 ### Optional Fields
 
 * `year` to indicate copyright years
-* `skip` to skip generating liense entries (for proprietary libraries)
+* `skip` to skip generating license entries (for proprietary libraries)
 
 ### Example
 
@@ -154,9 +154,9 @@ make publish
 
 Keep `CHANGES.md` up-to-date.
 
-## Coryright and License
+## Copyright and License
 
-Copyright (c) 2016 Coopkad Inc.
+Copyright (c) 2016 Cookpad Inc.
 
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
