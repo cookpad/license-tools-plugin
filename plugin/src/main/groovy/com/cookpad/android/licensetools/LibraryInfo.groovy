@@ -16,6 +16,8 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
 
     String license = ""
 
+    String licenseUrl = ""
+
     String url = "";
 
     boolean skip = false
@@ -37,6 +39,7 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
             libraryInfo.copyrightHolder = lib.author
         }
         libraryInfo.license = lib.license ?: ""
+        libraryInfo.licenseUrl = lib.licenseUrl ?: ""
         libraryInfo.notice = lib.notice as String
         libraryInfo.skip = lib.skip as boolean
         libraryInfo.url = lib.url as String
