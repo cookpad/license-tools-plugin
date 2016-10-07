@@ -44,6 +44,9 @@ class LicenseToolsPlugin implements Plugin<Project> {
                     message.append("  name: ${libraryInfo.name ?: "#NAME#"}\n")
                     message.append("  copyrightHolder: ${libraryInfo.copyrightHolder ?: "#COPYRIGHT_HOLDER#"}\n")
                     message.append("  license: ${libraryInfo.license ?: "#LICENSE#"}\n")
+                    if (libraryInfo.licenseUrl) {
+                        message.append("  licenseUrl: ${libraryInfo.licenseUrl ?: "#LICENSEURL#"}\n")
+                    }
                     if (libraryInfo.url) {
                         message.append("  url: ${libraryInfo.url ?: "#URL#"}\n")
                     }
@@ -142,6 +145,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
                 if (!libraryInfo.license) {
                     // takes the first license
                     libraryInfo.license = it.name.text().trim()
+                    libraryInfo.licenseUrl = it.url.text().trim()
                 }
             }
         }
@@ -233,6 +237,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
                         copyrightHolder: l.copyrightHolder,
                         copyrightStatement: l.copyrightStatement,
                         license: l.license,
+                        licenseUrl: l.licenseUrl,
                         normalizedLicense: l.normalizedLicense,
                         year: l.year,
                         url: l.url,
