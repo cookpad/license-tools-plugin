@@ -103,6 +103,9 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
                 return "bsd_3_clauses"
             case ~/(?i).*\bisc\b.*/:
                 return "isc"
+            case ~/(?i).*\bmozilla\b.*\bpublic\b.*\b2\b.*/:
+            case ~/(?i).*\bmpl\b.*\b2\b.*/:
+                return "mpl2"
             default:
                 return name
         }
