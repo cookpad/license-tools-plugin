@@ -106,6 +106,9 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
             case ~/(?i).*\bmozilla\b.*\bpublic\b.*\b2\b.*/:
             case ~/(?i).*\bmpl\b.*\b2\b.*/:
                 return "mpl2"
+            case ~/(?i).*\beclipse\b.*\bpublic\b.*\b1\b.*/:
+            case ~/(?i).*\bepl\b.*\b1\b.*/:
+                return "epl1"
             default:
                 return name
         }
