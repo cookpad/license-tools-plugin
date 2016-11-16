@@ -62,6 +62,10 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
         return libraryName ?: getNameFromArtifactId() ?: filename
     }
 
+    private String getId() {
+        return artifactId ?: filename
+    }
+
     // called from HTML templates
     public String getCopyrightStatement() {
         if (notice) {
@@ -132,7 +136,7 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
 
         LibraryInfo that = (LibraryInfo) o
 
-        if (name != that.name) {
+        if (id != that.id) {
             return false
         }
 
@@ -140,11 +144,11 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
     }
 
     int hashCode() {
-        return name.hashCode()
+        return id.hashCode()
     }
 
     @Override
     int compareTo(LibraryInfo o) {
-        return name.compareToIgnoreCase(o.name)
+        return id.compareToIgnoreCase(o.id)
     }
 }
