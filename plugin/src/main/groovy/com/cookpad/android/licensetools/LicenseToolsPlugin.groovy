@@ -22,7 +22,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.extensions.add(LicenseToolsExtension.NAME, LicenseToolsExtension)
 
-        def checkLicenses = project.task('checkLicenses') << {
+        def checkLicenses = project.task('checkLicenses').doLast {
             initialize(project)
 
             def notDocumented = dependencyLicenses.notListedIn(librariesYaml)
@@ -73,13 +73,13 @@ class LicenseToolsPlugin implements Plugin<Project> {
             description = 'Check whether dependency licenses are listed in licenses.yml'
         }
 
-        def generateLicensePage = project.task('generateLicensePage') << {
+        def generateLicensePage = project.task('generateLicensePage').doLast {
             initialize(project)
             generateLicensePage(project)
         }
         generateLicensePage.dependsOn('checkLicenses')
 
-        def generateLicenseJson = project.task('generateLicenseJson') << {
+        def generateLicenseJson = project.task('generateLicenseJson').doLast {
             initialize(project)
             generateLicenseJson(project)
         }
