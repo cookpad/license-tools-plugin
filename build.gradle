@@ -33,7 +33,7 @@ def updateReadme(oldVersion, newVersion) {
     file("README.md").withWriter { it << result }
 }
 
-task bumpMajor << {
+task(bumpMajor).doLast {
     def oldVersion = versionName
     def versionParts = versionName.split(/\./)
     versionParts[0] = (versionParts[0] as int) + 1
@@ -43,7 +43,7 @@ task bumpMajor << {
     tasks.version.execute()
 }
 
-task bumpMinor << {
+task(bumpMinor).doLast {
     def oldVersion = versionName
     def versionParts = versionName.split(/\./)
     versionParts[1] = (versionParts[1] as int) + 1
@@ -53,7 +53,7 @@ task bumpMinor << {
     tasks.version.execute()
 }
 
-task bumpPatch << {
+task(bumpPatch).doLast {
     def oldVersion = versionName
     def versionParts = versionName.split(/\./)
     versionParts[2] = (versionParts[2] as int) + 1
@@ -63,7 +63,7 @@ task bumpPatch << {
     tasks.version.execute()
 }
 
-task version << {
+task(version).doLast {
     println "v" + versionFile.readLines()[0]
 }
 
@@ -80,7 +80,7 @@ String shell(String command) {
     return proc.in.text;
 }
 
-task releng << {
+task(releng).doLast {
     def tag = "v" + versionName
     println "Release engineering for ${tag}"
 
