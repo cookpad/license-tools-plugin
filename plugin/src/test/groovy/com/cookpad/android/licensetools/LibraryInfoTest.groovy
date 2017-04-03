@@ -104,6 +104,13 @@ public class LibraryInfoTest {
         assertNotEquals("epl1", normalizeLicense("epl2"))
         assertNotEquals("epl1", normalizeLicense("Eclipse Public License 3.0"))
 
+        // Facebook Platform License
+        assertEquals("facebook_platform_license", normalizeLicense("Facebook Platform License"))
+        assertEquals("facebook_platform_license", normalizeLicense("facebook_platform_license"))
+        assertEquals("facebook_platform_license", normalizeLicense("The Facebook Platform License"))
+        assertNotEquals("facebook_platform_license", normalizeLicense("BSD"))
+        assertNotEquals("facebook_platform_license", normalizeLicense("MIT"))
+
         // Other
         assertEquals("Other", normalizeLicense("Other"))
         assertEquals("No license found", normalizeLicense("No license found"))
