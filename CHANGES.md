@@ -1,5 +1,8 @@
 # Revision History of license-tools-plugin
 
+## v0.21.0
+- [Support Facebook Platform License](https://github.com/cookpad/license-tools-plugin/issues/40)
+
 ## v0.20.0
 - [Support Mozilla Public License(1.1)](https://github.com/cookpad/license-tools-plugin/pull/39)
 
