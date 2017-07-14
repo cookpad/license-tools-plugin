@@ -43,3 +43,9 @@
   name: Picasso
   copyrightHolder: Square, Inc.
   license: apache2
+- artifact: org.reactivestreams:reactive-streams:+
+  name: reactive-streams
+  copyrightHolder: N/A
+  license: CC0
+  licenseUrl: http://creativecommons.org/publicdomain/zero/1.0/
+  url: http://www.reactive-streams.org/
