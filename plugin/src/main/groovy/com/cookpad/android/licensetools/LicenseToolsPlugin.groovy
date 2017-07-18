@@ -281,9 +281,14 @@ class LicenseToolsPlugin implements Plugin<Project> {
         def subprojects = project.rootProject.subprojects.groupBy { Project p -> "$p.group:$p.name:$p.version" }
 
         List<ResolvedArtifact> runtimeDependencies = project.configurations.all.findAll { Configuration c ->
-            c.name.matches(/^(?:release\w*)?[cC]ompile$/) // compile, releaseCompile, releaseProductionCompile, and so on.
+            // compile|implementation|api, release(Compile|Implementation|Api), releaseProduction(Compile|Implementation|Api), and so on.
+            c.name.matches(/^(?:release\w*)?([cC]ompile|[iI]mplementation|[aA]pi)$/)
         }.collect {
-            it.resolvedConfiguration.resolvedArtifacts
+            Configuration copyConfiguration = it.copyRecursive()
+            if (copyConfiguration.metaClass.respondsTo(copyConfiguration, "setCanBeResolved", Boolean)) {
+                copyConfiguration.setCanBeResolved(true)
+            }
+            copyConfiguration.resolvedConfiguration.resolvedArtifacts
         }.flatten() as List<ResolvedArtifact>
 
         def seen = new HashSet<String>()
