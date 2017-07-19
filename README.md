@@ -76,6 +76,26 @@ This plugin does not provide `Activity` nor `Fragment` to show `licenses.html`. 
 
 `example/MainActivity` is an example.
 
+### Configuring the plugin
+
+Use `licenseTools` in your build.gradle to add some optional configuration.
+
+For example:
+```
+licenseTools {
+    outputHtml = "licenses_output.html"
+}
+```
+
+Available configuration fields:
+
+| Field name      | Default value      | Description   | 
+| -------------   | -------------      | ------------- |
+| `licensesYaml`  | `"licenses.yml"`   | The name of the licenses yml file                                                                         |
+| `outputHtml`    | `"licenses.html"`  | The file name of the output of the `generateLicensePage` task                                             |
+| `outputHtml`    | `"licenses.json"`  | The file name of the output of the `generateLicenseJson` task                                             |
+| `ignoredGroups` | `[]` (empty array) | An array of group names the plugin will ignore (useful for internal dependencies with missing .pom files) |
+
 ## DataSet Format
 
 ### Required Fields

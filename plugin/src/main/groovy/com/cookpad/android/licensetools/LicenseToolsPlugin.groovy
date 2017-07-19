@@ -91,7 +91,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
     void initialize(Project project) {
         LicenseToolsExtension ext = project.extensions.findByType(LicenseToolsExtension)
         loadLibrariesYaml(project.file(ext.licensesYaml))
-        loadDependencyLicenses(project)
+        loadDependencyLicenses(project, ext.ignoredGroups)
     }
 
     void loadLibrariesYaml(File licensesYaml) {
@@ -106,9 +106,12 @@ class LicenseToolsPlugin implements Plugin<Project> {
         }
     }
 
-    void loadDependencyLicenses(Project project) {
+    void loadDependencyLicenses(Project project, Set<String> ignoredGroups) {
         resolveProjectDependencies(project).each { d ->
             if (d.moduleVersion.id.version == "unspecified") {
+                return
+            }
+            if (ignoredGroups.contains(d.moduleVersion.id.group)) {
                 return
             }
 
