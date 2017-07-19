@@ -1,5 +1,13 @@
 # Revision History of license-tools-plugin
 
+## v0.22.0
+- [Added ability to completely ignore certain groups](https://github.com/cookpad/license-tools-plugin/issues/47)
+- [Support android gradle plugin 3.0+](https://github.com/cookpad/license-tools-plugin/issues/46)
+- [Update build tools and dependencies](https://github.com/cookpad/license-tools-plugin/issues/43)
+
+## v0.21.1
+- [Update facebook platform license template](https://github.com/cookpad/license-tools-plugin/pull/42)
+
 ## v0.21.0
 - [Support Facebook Platform License](https://github.com/cookpad/license-tools-plugin/issues/40)
 
