@@ -51,6 +51,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
                         message.append("  url: ${libraryInfo.url ?: "#URL#"}\n")
                     }
                     project.logger.warn(message.toString().trim())
+                    appendToLicenseYaml(project, message.toString().trim())
                 }
             }
             if (notInDependencies.size() > 0) {
@@ -156,6 +157,12 @@ class LicenseToolsPlugin implements Plugin<Project> {
 
     Map<String, ?> loadYaml(File yamlFile) {
         return yaml.load(yamlFile.text) as Map<String, ?> ?: [:]
+    }
+
+    void appendToLicenseYaml(Project project, String content) {
+        def ext = project.extensions.getByType(LicenseToolsExtension)
+
+        project.file(ext.licensesYaml).append("\n${content}")
     }
 
     void generateLicensePage(Project project) {
