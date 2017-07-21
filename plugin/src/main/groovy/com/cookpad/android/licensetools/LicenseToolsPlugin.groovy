@@ -40,7 +40,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
                 notDocumented.each { libraryInfo ->
                     def message = new StringBuffer()
                     message.append("- artifact: ${libraryInfo.artifactId.withWildcardVersion()}\n")
-                    message.append("  name: ${libraryInfo.name ?: "#NAME#"}\n")
+                    message.append("  name: ${libraryInfo.escapedName ?: "#NAME#"}\n")
                     message.append("  copyrightHolder: ${libraryInfo.copyrightHolder ?: "#COPYRIGHT_HOLDER#"}\n")
                     message.append("  license: ${libraryInfo.license ?: "#LICENSE#"}\n")
                     if (libraryInfo.licenseUrl) {
