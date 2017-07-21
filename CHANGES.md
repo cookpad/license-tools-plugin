@@ -1,5 +1,8 @@
 # Revision History of license-tools-plugin
 
+## v0.23.0
+- [Support CC0 1.0 license](https://github.com/cookpad/license-tools-plugin/pull/45)
+
 ## v0.22.0
 - [Added ability to completely ignore certain groups](https://github.com/cookpad/license-tools-plugin/issues/47)
 - [Support android gradle plugin 3.0+](https://github.com/cookpad/license-tools-plugin/issues/46)
