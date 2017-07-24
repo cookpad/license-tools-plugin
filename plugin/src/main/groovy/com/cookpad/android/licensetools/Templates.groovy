@@ -13,8 +13,15 @@ public class Templates {
     public static String buildLicenseHtml(LibraryInfo library, File projectDir) {
         assertLicenseAndStatement(library)
 
-        def templateFile = "template/licenses/${library.normalizedLicense}.html"
-        return templateEngine.createTemplate(readResourceContent(templateFile, projectDir)).make([
+        def content
+        def templateFile = "template/licenses/${library.license}.html"
+        try {
+            content = readResourceContent(templateFile, projectDir)
+        } catch (FileNotFoundException e) {
+            templateFile = "template/licenses/${library.normalizedLicense}.html"
+            content = readResourceContent(templateFile, projectDir)
+        }
+        return templateEngine.createTemplate(content).make([
                 "library": library
         ])
     }
