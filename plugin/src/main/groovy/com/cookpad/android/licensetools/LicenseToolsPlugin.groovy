@@ -172,12 +172,10 @@ class LicenseToolsPlugin implements Plugin<Project> {
             // merge dependencyLicenses's libraryInfo into librariesYaml's
             def o = dependencyLicenses.find(libraryInfo.artifactId)
             if (o) {
-                if (!libraryInfo.license) {
-                    libraryInfo.license = o.license
-                }
+                libraryInfo.license = libraryInfo.license ?: o.license
                 libraryInfo.filename = o.filename
                 libraryInfo.artifactId = o.artifactId
-                libraryInfo.url = o.url.isEmpty() ? libraryInfo.url ?: "" : o.url
+                libraryInfo.url = libraryInfo.url ?: o.url
             }
             try {
                 content.append(Templates.buildLicenseHtml(libraryInfo));
@@ -213,12 +211,10 @@ class LicenseToolsPlugin implements Plugin<Project> {
             // merge dependencyLicenses's libraryInfo into librariesYaml's
             def o = dependencyLicenses.find(libraryInfo.artifactId)
             if (o) {
-                if (!libraryInfo.license) {
-                    libraryInfo.license = o.license
-                }
+                libraryInfo.license = libraryInfo.license ?: o.license
                 // libraryInfo.filename = o.filename
                 libraryInfo.artifactId = o.artifactId
-                libraryInfo.url = o.url.isEmpty() ? libraryInfo.url ?: "" : o.url
+                libraryInfo.url = libraryInfo.url ?: o.url
             }
             try {
                 Templates.assertLicenseAndStatement(libraryInfo)
