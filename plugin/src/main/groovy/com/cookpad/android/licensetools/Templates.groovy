@@ -10,11 +10,11 @@ public class Templates {
 
     static final SimpleTemplateEngine templateEngine = new SimpleTemplateEngine()
 
-    public static String buildLicenseHtml(LibraryInfo library) {
+    public static String buildLicenseHtml(LibraryInfo library, File projectDir) {
         assertLicenseAndStatement(library)
 
         def templateFile = "template/licenses/${library.normalizedLicense}.html"
-        return templateEngine.createTemplate(readResourceContent(templateFile)).make([
+        return templateEngine.createTemplate(readResourceContent(templateFile, projectDir)).make([
                 "library": library
         ])
     }
@@ -28,9 +28,9 @@ public class Templates {
         }
     }
 
-    public static String wrapWithLayout(CharSequence content) {
+    public static String wrapWithLayout(CharSequence content, File projectDir) {
         def templateFile = "template/layout.html"
-        return templateEngine.createTemplate(readResourceContent(templateFile)).make([
+        return templateEngine.createTemplate(readResourceContent(templateFile, projectDir)).make([
                 "content": makeIndent(content, 4)
         ])
     }
@@ -47,12 +47,18 @@ public class Templates {
         return s.toString()
     }
 
-    static String readResourceContent(String filename) {
-        def templateFileUrl = Templates.class.getClassLoader().getResource(filename)
-        if (templateFileUrl == null) {
-            throw new FileNotFoundException("File not found: $filename")
+    static String readResourceContent(String filename, File projectDir) {
+        def templateFileUrl
+        def templateFile = new File(projectDir, filename)
+        if (templateFile.exists()) {
+            templateFileUrl = templateFile.toURI().toURL()
+        } else {
+            templateFileUrl = Templates.class.getClassLoader().getResource(filename)
+            if (templateFileUrl == null) {
+                throw new FileNotFoundException("File not found: $filename")
+            }
+            templateFileUrl = new URL(templateFileUrl.toString())
         }
-        templateFileUrl = new URL(templateFileUrl.toString())
 
         try {
             return templateFileUrl.openStream().getText("UTF-8")
