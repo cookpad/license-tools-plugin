@@ -31,10 +31,16 @@ public class Templates {
     public static String wrapWithLayout(CharSequence content, File projectDir) {
         def templateFile = "template/layout.html"
         def templateCssFile = "template/layout.css"
+        def templateHeaderFile = "template/header.html"
+        def templateFooterFile = "template/footer.html"
         def cssContent = readResourceContent(templateCssFile, projectDir)
+        def headerContent = readResourceContent(templateHeaderFile, projectDir)
+        def footerContent = readResourceContent(templateFooterFile, projectDir)
         return templateEngine.createTemplate(readResourceContent(templateFile, projectDir)).make([
                 "css"    : makeIndent(cssContent, 4),
-                "content": makeIndent(content, 4)
+                "header": makeIndent(headerContent, 4),
+                "content": makeIndent(content, 4),
+                "footer": makeIndent(footerContent, 4)
         ])
     }
 

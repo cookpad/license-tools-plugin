@@ -2,9 +2,11 @@ body {
     color: #4c4a40;
     font-size: 87.5%;
 }
-.header, .library {
+.header, .footer, .library {
     margin: 1em 0;
     padding: 0 0.5em;
+}
+.header, .library {
     border-bottom: 1px solid #ebeae6;
 }
 .title {
