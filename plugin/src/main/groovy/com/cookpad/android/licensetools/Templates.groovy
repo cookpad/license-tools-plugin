@@ -30,7 +30,10 @@ public class Templates {
 
     public static String wrapWithLayout(CharSequence content, File projectDir) {
         def templateFile = "template/layout.html"
+        def templateCssFile = "template/layout.css"
+        def cssContent = readResourceContent(templateCssFile, projectDir)
         return templateEngine.createTemplate(readResourceContent(templateFile, projectDir)).make([
+                "css"    : makeIndent(cssContent, 4),
                 "content": makeIndent(content, 4)
         ])
     }
