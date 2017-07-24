@@ -171,12 +171,14 @@ class LicenseToolsPlugin implements Plugin<Project> {
 
             // merge dependencyLicenses's libraryInfo into librariesYaml's
             def o = dependencyLicenses.find(libraryInfo.artifactId)
-            if (!libraryInfo.license) {
-                libraryInfo.license = o.license
+            if (o) {
+                if (!libraryInfo.license) {
+                    libraryInfo.license = o.license
+                }
+                libraryInfo.filename = o.filename
+                libraryInfo.artifactId = o.artifactId
+                libraryInfo.url = o.url.isEmpty() ? libraryInfo.url ?: "" : o.url
             }
-            libraryInfo.filename = o.filename
-            libraryInfo.artifactId = o.artifactId
-            libraryInfo.url = o.url.isEmpty() ? libraryInfo.url ?: "" : o.url
             try {
                 content.append(Templates.buildLicenseHtml(libraryInfo));
             } catch (NotEnoughInformationException e) {
@@ -210,12 +212,14 @@ class LicenseToolsPlugin implements Plugin<Project> {
 
             // merge dependencyLicenses's libraryInfo into librariesYaml's
             def o = dependencyLicenses.find(libraryInfo.artifactId)
-            if (!libraryInfo.license) {
-                libraryInfo.license = o.license
+            if (o) {
+                if (!libraryInfo.license) {
+                    libraryInfo.license = o.license
+                }
+                // libraryInfo.filename = o.filename
+                libraryInfo.artifactId = o.artifactId
+                libraryInfo.url = o.url.isEmpty() ? libraryInfo.url ?: "" : o.url
             }
-            // libraryInfo.filename = o.filename
-            libraryInfo.artifactId = o.artifactId
-            libraryInfo.url = o.url.isEmpty() ? libraryInfo.url ?: "" : o.url
             try {
                 Templates.assertLicenseAndStatement(libraryInfo)
                 librariesArray << libraryInfo
