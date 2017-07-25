@@ -43,6 +43,35 @@
     list-style-type: lower-alpha;
     padding-left: 2em;
     }
+    input ~ .license {
+    max-height: 200px;
+    overflow: hidden;
+    }
+    input, label {
+    position: absolute;
+    right: 16px;
+    width: 12px;
+    height: 12px;
+    margin: 20px;
+    }
+    input {
+    opacity: 0;
+    z-index: 1;
+    }
+    label {
+    margin-top: 16px;
+    text-align: center;
+    font-weight: bold;
+    }
+    label::before {
+    content: "+";
+    }
+    input:checked + label::before {
+    content: "-";
+    }
+    input:checked ~ .license {
+    max-height: none;
+    }
   </style>
 </head>
 <body>
@@ -50,7 +79,8 @@
       <!-- https://opensource.org/licenses/Apache-2.0 -->
       <h1 class="title">Android Support Libraries</h1>
       <p class="notice">Copyright &copy; The Android Open Source Project. All rights reserved.</p>
-      
+
+      <input type="checkbox"><label></label>
       <div class="license">
         <h2>
           Apache License
@@ -306,7 +336,7 @@
           <li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following
             disclaimer.
           </li>
-    
+
           <li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
             disclaimer in the documentation and/or other materials provided with the distribution.
           </li>
@@ -326,7 +356,8 @@
       <!-- https://opensource.org/licenses/Apache-2.0 -->
       <h1 class="title">Android Orma</h1>
       <p class="notice">Copyright (c) 2015 FUJI Goro (gfx)<br/>SQLite.g4 is: Copyright (c) 2014 by Bart Kiers<br/></p>
-      
+
+      <input type="checkbox"><label></label>
       <div class="license">
         <h2>
           Apache License
@@ -572,7 +603,8 @@
       <!-- https://opensource.org/licenses/Apache-2.0 -->
       <h1 class="title">Gson</h1>
       <p class="notice">Copyright &copy; Google Inc. All rights reserved.</p>
-      
+
+      <input type="checkbox"><label></label>
       <div class="license">
         <h2>
           Apache License
@@ -818,7 +850,8 @@
       <!-- https://opensource.org/licenses/Apache-2.0 -->
       <h1 class="title">Picasso</h1>
       <p class="notice">Copyright &copy; Square, Inc. All rights reserved.</p>
-      
+
+      <input type="checkbox"><label></label>
       <div class="license">
         <h2>
           Apache License
@@ -1063,7 +1096,7 @@
     <div class="library">
       <!-- https://opensource.org/licenses/BSD-3-Clause -->
       <h1 class="title">ANTLR4</h1>
-      
+
       <div class="license">
         <p>Copyright &copy; Terence Parr and Sam Harwell. All rights reserved.</p>
         <p>
@@ -1097,6 +1130,7 @@
       <h1 class="title">RxAndroid</h1>
       <p class="notice">Copyright &copy; The RxAndroid authors. All rights reserved.</p>
       <p><a href="https://github.com/ReactiveX/RxAndroid">https://github.com/ReactiveX/RxAndroid</a></p>
+      <input type="checkbox"><label></label>
       <div class="license">
         <h2>
           Apache License
@@ -1343,6 +1377,7 @@
       <h1 class="title">RxJava</h1>
       <p class="notice">Copyright &copy; Netflix, Inc. All rights reserved.</p>
       <p><a href="https://github.com/ReactiveX/RxJava">https://github.com/ReactiveX/RxJava</a></p>
+      <input type="checkbox"><label></label>
       <div class="license">
         <h2>
           Apache License
@@ -1589,7 +1624,7 @@
       <p><a href="http://www.reactive-streams.org/">http://www.reactive-streams.org/</a></p>
       <div class="license">
         <h2>CC0 1.0 Universal</h2>
-    
+
         <blockquote>
           CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT
           PROVIDE LEGAL SERVICES. DISTRIBUTION OF THIS DOCUMENT DOES
@@ -1726,8 +1761,8 @@
             Commons is not a party to this document and has no duty or
             obligation with respect to this CC0 or use of the Work.</li>
         </ol>
-    
-    
+
+
       </div>
     </div>
 

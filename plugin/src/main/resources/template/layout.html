@@ -43,6 +43,35 @@
     list-style-type: lower-alpha;
     padding-left: 2em;
     }
+    input ~ .license {
+    max-height: 200px;
+    overflow: hidden;
+    }
+    input, label {
+    position: absolute;
+    right: 16px;
+    width: 12px;
+    height: 12px;
+    margin: 20px;
+    }
+    input {
+    opacity: 0;
+    z-index: 1;
+    }
+    label {
+    margin-top: 16px;
+    text-align: center;
+    font-weight: bold;
+    }
+    label::before {
+    content: "+";
+    }
+    input:checked + label::before {
+    content: "-";
+    }
+    input:checked ~ .license {
+    max-height: none;
+    }
   </style>
 </head>
 <body>
