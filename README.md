@@ -3,6 +3,7 @@
 Gradle Plugin to check library licenses and generate license pages.
 
 * `./gradlew checkLicenses` to check licenses in dependencies
+* `./gradlew updateLicenses` to update a library information file `licenses.yml`
 * `./gradlew generateLicensePage` to generate a license page `licenses.html`
 * `./gradlew generateLicenseJson` to generate a license json file `licenses.json`
 
@@ -46,8 +47,8 @@ You will see the following messages by `./gradlew checkLicenses`:
   name: #NAME#
   copyrightHolder: #AUTHOR#
   license: apache2
- ```
- 
+```
+
 ### Add library licenses to `app/licenses.yml`
 
 Then, Create `app/licenses.yml`, and add libraries listed the above with required fields:
@@ -65,6 +66,9 @@ Then, Create `app/licenses.yml`, and add libraries listed the above with require
 
 You can use wildcards in artifact names and versions.
 You'll know the Android support libraries are grouped in `com.android.support` so you use `com.android.support:+:+` here.
+
+Instead of manually appending missing libraries to `licenses.yml`,
+you can also run the `updateLicenses` task to update `licenses.yml` automatically.
 
 Then, `./gradlew checkLicenses` will passes.
 
