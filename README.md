@@ -144,6 +144,50 @@ Available configuration fields:
   skip: true
 ```
 
+## Custom Template
+
+This plugin supports custom template.
+You can define the following items of a license page as you like,
+then they overrides corresponding items in the plugin.
+
+- header and footer
+- CSS styles
+- license document
+
+### Define Custom Template
+
+- To override header or footer of a license page, create `header.html` or `footer.html` in your project
+- To override CSS styles of a license page, create `layout.css` in your project
+- To override certain license document, create a file with the same name as its license name in your project
+  - ex. To override `apache2` license, create `apache2.html` under `app/template/` directory
+- To define unsupported licenses by default, such as mixed licenses, proprietary licenses and minor licenses,
+  create a file with the same name as its license name in your project
+  - ex. To define `Fabric Software and Services Agreement`,
+    create `fabric_agreement.html` under `app/template/` directory
+    and use `fabric_agreement` as license name of the library in `licenses.yml`
+
+### Example
+
+```
+- plugin/src/main/resources/template/
+  - licenses/
+    - supported-license.html
+  - layout.html
+  - layout.css
+  - header.html
+  - footer.html
+- app/template/ (created by a plugin user)
+  - licenses/
+    - supported-license.html
+    - mixed-license.html
+    - proprietary-license.html
+    - minor-license.html
+  - layout.html
+  - layout.css
+  - header.html
+  - footer.html
+```
+
 ## See Also
 
 - [オープンソースライセンスの管理を楽にする -Android アプリ編 - クックパッド開発者ブログ](http://techlife.cookpad.com/entry/2016/04/28/183000)
