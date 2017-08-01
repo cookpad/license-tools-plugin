@@ -5,76 +5,85 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
     body {
-    color: #4c4a40;
-    font-size: 87.5%;
+        color: #4c4a40;
+        font-size: 87.5%;
+    }
+    .header, .footer, .library {
+        margin: 1em 0;
+        padding: 0 0.5em;
     }
     .header, .library {
-    margin: 1em 0;
-    padding: 0 0.5em;
-    border-bottom: 1px solid #ebeae6;
+        border-bottom: 1px solid #ebeae6;
     }
     .title {
-    font-size: 129%;
-    font-weight: bold;
-    margin: 1em 0
+        font-size: 129%;
+        font-weight: bold;
+        margin: 1em 0
     }
     .license {
-    background-color: #f7f7f9;
-    border-radius: 4px;
-    border: 1px solid #e1e1e8;
-    font-size: 80%;
-    padding: 9px 14px;
-    margin-bottom: 14px;
+        background-color: #f7f7f9;
+        border-radius: 4px;
+        border: 1px solid #e1e1e8;
+        font-size: 80%;
+        padding: 9px 14px;
+        margin-bottom: 14px;
     }
     .license h1, .license h2 {
-    font-size: 100%;
-    font-weight: bold;
+        font-size: 100%;
+        font-weight: bold;
     }
     .license .inline {
-    display: inline;
+        display: inline;
     }
     .license .block {
-    margin: 1em 0;
+        margin: 1em 0;
     }
     .license pre {
-    white-space: pre-wrap;
+        white-space: pre-wrap;
     }
     .license .low-alpha {
-    list-style-type: lower-alpha;
-    padding-left: 2em;
+        list-style-type: lower-alpha;
+        padding-left: 2em;
     }
     input ~ .license {
-    max-height: 200px;
-    overflow: hidden;
+        max-height: 200px;
+        overflow: hidden;
     }
     input, label {
-    position: absolute;
-    right: 16px;
-    width: 12px;
-    height: 12px;
-    margin: 20px;
+        position: absolute;
+        right: 16px;
+        width: 12px;
+        height: 12px;
+        margin: 20px;
     }
     input {
-    opacity: 0;
-    z-index: 1;
+        opacity: 0;
+        z-index: 1;
     }
     label {
-    margin-top: 16px;
-    text-align: center;
-    font-weight: bold;
+        margin-top: 16px;
+        text-align: center;
+        font-weight: bold;
     }
     label::before {
-    content: "+";
+        content: "+";
     }
     input:checked + label::before {
-    content: "-";
+        content: "-";
     }
     input:checked ~ .license {
-    max-height: none;
+        max-height: none;
     }
+
   </style>
 </head>
 <body>
+    <div class="header">
+      <h1>Example App</h1>
+      <p>Copyright &copy; 2017 <a href="http://example.com">Example.com</a>. All rights reserved.</p>
+      <p>Example App is built using the following open source software.</p>
+    </div>
+
     <div class="library">
       <!-- https://opensource.org/licenses/Apache-2.0 -->
       <h1 class="title">Android Support Libraries</h1>
@@ -849,32 +858,118 @@
       </div>
     </div>
     <div class="library">
-      <!-- https://opensource.org/licenses/BSD-2-Clause -->
+      <!-- https://github.com/bumptech/glide/blob/master/LICENSE -->
       <h1 class="title">Glide</h1>
+      <p class="notice">Copyright &copy; Google Inc. All rights reserved.</p>
       <p><a href="https://github.com/bumptech/glide">https://github.com/bumptech/glide</a></p>
+      <input type="checkbox"><label></label>
       <div class="license">
-        <p>Copyright &copy; Google Inc. All rights reserved.</p>
+        <h2>BSD, part MIT and Apache 2.0 License</h2>
+        <p>License for everything not in third_party and not otherwise marked:</p>
+        <p>Copyright 2014 Google, Inc. All rights reserved.</p>
         <p>
-          Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
-          following conditions are met:
+          Redistribution and use in source and binary forms, with or without modification, are
+          permitted provided that the following conditions are met:
         </p>
         <ol>
-          <li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following
-            disclaimer.
+          <li>
+            Redistributions of source code must retain the above copyright notice, this list of
+            conditions and the following disclaimer.
           </li>
-    
-          <li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
-            disclaimer in the documentation and/or other materials provided with the distribution.
+          <li>
+            Redistributions in binary form must reproduce the above copyright notice, this list
+            of conditions and the following disclaimer in the documentation and/or other materials
+            provided with the distribution.
           </li>
         </ol>
         <p>
-          THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-          INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-          DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-          SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-          LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-          CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-          SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+          THIS SOFTWARE IS PROVIDED BY GOOGLE, INC. ``AS IS'' AND ANY EXPRESS OR IMPLIED
+          WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+          FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL GOOGLE, INC. OR
+          CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+          CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+          SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+          ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+          NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+          ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        </p>
+        <p>
+          The views and conclusions contained in the software and documentation are those of the
+          authors and should not be interpreted as representing official policies, either expressed
+          or implied, of Google, Inc.
+        </p>
+        <hr/>
+        <p>License for third_party/disklrucache:</p>
+        <p>
+          Copyright 2012 Jake Wharton<br/>
+          Copyright 2011 The Android Open Source Project
+        </p>
+        <p>
+          Licensed under the Apache License, Version 2.0 (the "License");
+          you may not use this file except in compliance with the License.
+          You may obtain a copy of the License at
+        </p>
+        <blockquote>http://www.apache.org/licenses/LICENSE-2.0</blockquote>
+        <p>
+          Unless required by applicable law or agreed to in writing, software
+          distributed under the License is distributed on an "AS IS" BASIS,
+          WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+          See the License for the specific language governing permissions and
+          limitations under the License.
+        </p>
+        <hr/>
+        <p>License for third_party/gif_decoder:</p>
+        <p>Copyright (c) 2013 Xcellent Creations, Inc.</p>
+        <p>
+          Permission is hereby granted, free of charge, to any person obtaining
+          a copy of this software and associated documentation files (the
+          "Software"), to deal in the Software without restriction, including
+          without limitation the rights to use, copy, modify, merge, publish,
+          distribute, sublicense, and/or sell copies of the Software, and to
+          permit persons to whom the Software is furnished to do so, subject to
+          the following conditions:
+        </p>
+        <p>
+          The above copyright notice and this permission notice shall be
+          included in all copies or substantial portions of the Software.
+        </p>
+        <p>
+          THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+          EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+          MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+          NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+          LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+          OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+          WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+        </p>
+        <hr/>
+        <p>
+          License for third_party/gif_encoder/AnimatedGifEncoder.java and
+          third_party/gif_encoder/LZWEncoder.java:
+        </p>
+        <p>
+          No copyright asserted on the source code of this class. May be used for any
+          purpose, however, refer to the Unisys LZW patent for restrictions on use of
+          the associated LZWEncoder class. Please forward any corrections to
+          kweiner@fmsware.com.
+        </p>
+        <p>License for third_party/gif_encoder/NeuQuant.java</p>
+        <p>Copyright (c) 1994 Anthony Dekker</p>
+        <p>
+          NEUQUANT Neural-Net quantization algorithm by Anthony Dekker, 1994. See
+          "Kohonen neural networks for optimal colour quantization" in "Network:
+          Computation in Neural Systems" Vol. 5 (1994) pp 351-367. for a discussion of
+          the algorithm.
+        </p>
+        <p>
+          Any party obtaining a copy of these files from the author, directly or
+          indirectly, is granted, free of charge, a full and unrestricted irrevocable,
+          world-wide, paid up, royalty-free, nonexclusive right and license to deal in
+          this software and documentation files (the "Software"), including without
+          limitation the rights to use, copy, modify, merge, publish, distribute,
+          sublicense, and/or sell copies of the Software, and to permit persons who
+          receive copies from any such party to do so, with the only requirement being
+          that this copyright notice remain intact.
         </p>
       </div>
     </div>
@@ -1764,6 +1859,10 @@
     
     
       </div>
+    </div>
+
+    <div class="footer">
+      <p>This document is generated by <a href="https://github.com/cookpad/license-tools-plugin">Android License Tools Plugin</a>.</p>
     </div>
 
 </body>
