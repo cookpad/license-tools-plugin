@@ -9,9 +9,10 @@ ext {
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'com.android.tools.build:gradle:3.0.0-alpha9'
         classpath 'com.novoda:bintray-release:0.4.0' // https://github.com/novoda/bintray-release
     }
 }
