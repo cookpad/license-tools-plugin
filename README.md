@@ -93,7 +93,7 @@ Available configuration fields:
 | -------------   | -------------      | ------------- |
 | `licensesYaml`  | `"licenses.yml"`   | The name of the licenses yml file                                                                         |
 | `outputHtml`    | `"licenses.html"`  | The file name of the output of the `generateLicensePage` task                                             |
-| `outputHtml`    | `"licenses.json"`  | The file name of the output of the `generateLicenseJson` task                                             |
+| `outputJson`    | `"licenses.json"`  | The file name of the output of the `generateLicenseJson` task                                             |
 | `ignoredGroups` | `[]` (empty array) | An array of group names the plugin will ignore (useful for internal dependencies with missing .pom files) |
 
 ## DataSet Format
