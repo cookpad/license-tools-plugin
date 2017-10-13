@@ -1,5 +1,14 @@
 # Revision History of license-tools-plugin
 
+## v0.24.0
+- [Place an expand/collapse button at each license document](https://github.com/cookpad/license-tools-plugin/pull/50)
+- [Support local Jar libraries and override incorrect pom.xml](https://github.com/cookpad/license-tools-plugin/pull/56)
+- [Generate licenses.html with the same library order in licenses.yml](https://github.com/cookpad/license-tools-plugin/pull/52)
+- [Improve that did not fail on :checkLicense](https://github.com/cookpad/license-tools-plugin/pull/62)
+- [Escape colon with space (: ) in library name as it is invalid in YAML format](https://github.com/cookpad/license-tools-plugin/pull/59)
+- [Fix README](https://github.com/cookpad/license-tools-plugin/pull/64)
+- [Support more major OSS licenses](https://github.com/cookpad/license-tools-plugin/pull/61)
+
 ## v0.23.0
 - [Support CC0 1.0 license](https://github.com/cookpad/license-tools-plugin/pull/45)
 
