@@ -6,6 +6,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
+import org.gradle.api.artifacts.ResolveException
 import org.gradle.api.artifacts.ResolvedArtifact
 import org.xml.sax.helpers.DefaultHandler
 import org.yaml.snakeyaml.Yaml
@@ -283,16 +284,24 @@ class LicenseToolsPlugin implements Plugin<Project> {
     Set<ResolvedArtifact> resolveProjectDependencies(Project project) {
         def subprojects = project.rootProject.subprojects.groupBy { Project p -> "$p.group:$p.name:$p.version" }
 
-        List<ResolvedArtifact> runtimeDependencies = project.configurations.all.findAll { Configuration c ->
-            // compile|implementation|api, release(Compile|Implementation|Api), releaseProduction(Compile|Implementation|Api), and so on.
-            c.name.matches(/^(?:release\w*)?([cC]ompile|[iI]mplementation|[aA]pi)$/)
-        }.collect {
-            Configuration copyConfiguration = it.copyRecursive()
-            if (copyConfiguration.metaClass.respondsTo(copyConfiguration, "setCanBeResolved", Boolean)) {
-                copyConfiguration.setCanBeResolved(true)
-            }
-            copyConfiguration.resolvedConfiguration.resolvedArtifacts
-        }.flatten() as List<ResolvedArtifact>
+        List<ResolvedArtifact> runtimeDependencies = []
+
+        project.rootProject.subprojects.each { Project subproject ->
+            runtimeDependencies << subproject.configurations.all.findAll { Configuration c ->
+                // compile|implementation|api, release(Compile|Implementation|Api), releaseProduction(Compile|Implementation|Api), and so on.
+                c.name.matches(/^(?:release\w*)?([cC]ompile|[cC]ompileOnly|[iI]mplementation|[aA]pi)$/)
+            }.collect {
+                Configuration copyConfiguration = it.copyRecursive()
+                if (copyConfiguration.metaClass.respondsTo(copyConfiguration, "setCanBeResolved", Boolean)) {
+                    copyConfiguration.setCanBeResolved(true)
+                }
+
+                copyConfiguration.resolvedConfiguration.resolvedArtifacts
+            }.flatten() as List<ResolvedArtifact>
+        }
+
+        runtimeDependencies = runtimeDependencies.flatten()
+        runtimeDependencies.removeAll([null])
 
         def seen = new HashSet<String>()
         def dependenciesToHandle = new HashSet<ResolvedArtifact>()
@@ -307,7 +316,6 @@ class LicenseToolsPlugin implements Plugin<Project> {
                 }
             }
         }
-
         return dependenciesToHandle
     }
 }

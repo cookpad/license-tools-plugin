@@ -8,9 +8,9 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
 
     String filename = ""
 
-    String year = "";
+    String year = ""
 
-    String copyrightHolder = "";
+    String copyrightHolder = ""
 
     String notice = ""
 
@@ -18,7 +18,7 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
 
     String licenseUrl = ""
 
-    String url = "";
+    String url = ""
 
     boolean skip = false
 

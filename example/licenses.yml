@@ -49,3 +49,16 @@
   license: CC0
   licenseUrl: http://creativecommons.org/publicdomain/zero/1.0/
   url: http://www.reactive-streams.org/
+- artifact: org.apache.commons:commons-lang3:+
+  name: Apache Commons Lang
+  copyrightHolder: #COPYRIGHT_HOLDER#
+  license: #LICENSE#
+  url: http://commons.apache.org/proper/commons-lang/
+  skip: true
+- artifact: org.yaml:snakeyaml:+
+  name: SnakeYAML
+  copyrightHolder: #COPYRIGHT_HOLDER#
+  license: Apache License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://www.snakeyaml.org
+  skip: true

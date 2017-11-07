@@ -1,8 +1,5 @@
 package com.cookpad.android.licensetools;
 
-import com.android.annotations.NonNullByDefault;
-
-@NonNullByDefault
 public class ArtifactId implements Comparable<ArtifactId> {
 
     public final String group;
