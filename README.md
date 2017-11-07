@@ -144,6 +144,17 @@ Available configuration fields:
   skip: true
 ```
 
+## Notice
+### For Gradle Plugin 3 users
+- If you'd like to use `project` like the following, don't forget to set `configuration: 'default'`
+    - https://stackoverflow.com/questions/45679847/android-studio-3-0-compile-issue-cannot-choose-between-configurations
+
+```
+dependencies {
+    implementation project(path: ':example-dep', configuration: 'default')
+}
+```
+
 ## See Also
 
 - [オープンソースライセンスの管理を楽にする -Android アプリ編 - クックパッド開発者ブログ](http://techlife.cookpad.com/entry/2016/04/28/183000)
