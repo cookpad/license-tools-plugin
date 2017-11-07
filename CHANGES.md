@@ -1,5 +1,9 @@
 # Revision History of license-tools-plugin
 
+## v1.0.0
+- [fix resolving dependencies for project](https://github.com/cookpad/license-tools-plugin/pull/69)
+- [add a notice section to mention about `configuration`](https://github.com/cookpad/license-tools-plugin/pull/70)
+
 ## v0.24.0
 - [Place an expand/collapse button at each license document](https://github.com/cookpad/license-tools-plugin/pull/50)
 - [Support local Jar libraries and override incorrect pom.xml](https://github.com/cookpad/license-tools-plugin/pull/56)
