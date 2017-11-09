@@ -149,9 +149,21 @@ Available configuration fields:
 - If you'd like to use `project` like the following, don't forget to set `configuration: 'default'`
     - https://stackoverflow.com/questions/45679847/android-studio-3-0-compile-issue-cannot-choose-between-configurations
 
-```
+```gradle
 dependencies {
     implementation project(path: ':example-dep', configuration: 'default')
+}
+```
+
+- If your project's dependencies break with `configuration: 'default'`, you can switch which `implementation project()` call like the following control flow.
+
+```gradle
+dependencies {
+    if(project.gradle.startParameter.taskNames.contains("checkLicenses")) {
+        implementation project(path: ':example-dep', configuration: 'default')
+    } else {
+        implementation project(path: ':example-dep')
+    }
 }
 ```
 
