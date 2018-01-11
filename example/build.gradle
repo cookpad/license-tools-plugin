@@ -46,7 +46,9 @@ android {
 }
 
 licenseTools {
-    // ...
+//    ignoredProjects = [
+//            'example-dep'
+//    ]
 }
 
 dependencies {

@@ -1,16 +1,15 @@
 package com.cookpad.android.licensetools
 
+import groovy.json.JsonBuilder
 import groovy.util.slurpersupport.GPathResult
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
-import org.gradle.api.artifacts.ResolveException
 import org.gradle.api.artifacts.ResolvedArtifact
 import org.xml.sax.helpers.DefaultHandler
 import org.yaml.snakeyaml.Yaml
-import groovy.json.JsonBuilder
 
 class LicenseToolsPlugin implements Plugin<Project> {
 
@@ -92,7 +91,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
     void initialize(Project project) {
         LicenseToolsExtension ext = project.extensions.findByType(LicenseToolsExtension)
         loadLibrariesYaml(project.file(ext.licensesYaml))
-        loadDependencyLicenses(project, ext.ignoredGroups)
+        loadDependencyLicenses(project, ext.ignoredGroups, ext.ignoredProjects)
     }
 
     void loadLibrariesYaml(File licensesYaml) {
@@ -107,8 +106,8 @@ class LicenseToolsPlugin implements Plugin<Project> {
         }
     }
 
-    void loadDependencyLicenses(Project project, Set<String> ignoredGroups) {
-        resolveProjectDependencies(project).each { d ->
+    void loadDependencyLicenses(Project project, Set<String> ignoredGroups, Set<String> ignoredProjects) {
+        resolveProjectDependencies(project, ignoredProjects).each { d ->
             if (d.moduleVersion.id.version == "unspecified") {
                 return
             }
@@ -281,12 +280,13 @@ class LicenseToolsPlugin implements Plugin<Project> {
     }
 
     // originated from https://github.com/hierynomus/license-gradle-plugin DependencyResolver.groovy
-    Set<ResolvedArtifact> resolveProjectDependencies(Project project) {
-        def subprojects = project.rootProject.subprojects.groupBy { Project p -> "$p.group:$p.name:$p.version" }
+    Set<ResolvedArtifact> resolveProjectDependencies(Project project, Set<String> ignoredProjects) {
+        def subprojects = project.rootProject.subprojects.findAll { Project p -> !ignoredProjects.contains(p.name) }
+                .groupBy { Project p -> "$p.group:$p.name:$p.version" }
 
         List<ResolvedArtifact> runtimeDependencies = []
 
-        project.rootProject.subprojects.each { Project subproject ->
+        project.rootProject.subprojects.findAll { Project p -> !ignoredProjects.contains(p.name) }.each { Project subproject ->
             runtimeDependencies << subproject.configurations.all.findAll { Configuration c ->
                 // compile|implementation|api, release(Compile|Implementation|Api), releaseProduction(Compile|Implementation|Api), and so on.
                 c.name.matches(/^(?:release\w*)?([cC]ompile|[cC]ompileOnly|[iI]mplementation|[aA]pi)$/)
