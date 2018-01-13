@@ -167,6 +167,8 @@ dependencies {
 }
 ```
 
+You can also define method like `implementation_project` in `example/build.gradle` to reduce some boilerplate code.
+
 ## See Also
 
 - [オープンソースライセンスの管理を楽にする -Android アプリ編 - クックパッド開発者ブログ](http://techlife.cookpad.com/entry/2016/04/28/183000)
