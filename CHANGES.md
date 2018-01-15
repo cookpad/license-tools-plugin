@@ -1,5 +1,8 @@
 # Revision History of license-tools-plugin
 
+## v1.1.0
+- [add to ignore resolving dependencies](https://github.com/cookpad/license-tools-plugin/pull/75)
+
 ## v1.0.0
 - [fix resolving dependencies for project](https://github.com/cookpad/license-tools-plugin/pull/69)
 - [add a notice section to mention about `configuration`](https://github.com/cookpad/license-tools-plugin/pull/70)
