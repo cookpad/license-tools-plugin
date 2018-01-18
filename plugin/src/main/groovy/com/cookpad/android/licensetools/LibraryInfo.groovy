@@ -22,6 +22,8 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
 
     boolean skip = false
 
+    String licenseBody = ''
+
     // from libraries.yml
     public static LibraryInfo fromYaml(Object lib) {
         def libraryInfo = new LibraryInfo()
@@ -43,6 +45,7 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
         libraryInfo.notice = lib.notice as String
         libraryInfo.skip = lib.skip as boolean
         libraryInfo.url = lib.url as String
+        libraryInfo.licenseBody = lib.licenseBody as String
         return libraryInfo
     }
 
@@ -163,6 +166,8 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
             case ~/(?i).*\bgpl\b?.*3.*/:
             case ~/(?i).*\bgpl\b.*/:
                 return "gpl3"
+            case ~/(?i).*\bcustom\b.*/:
+                return "custom"
             default:
                 return name
         }
