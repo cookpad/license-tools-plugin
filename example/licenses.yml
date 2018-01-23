@@ -62,3 +62,8 @@
   licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
   url: http://www.snakeyaml.org
   skip: true
+- name: OpenCV
+  copyrightHolder: OpenCV team
+  license: bsd_3_clauses
+  url: "https://opencv.org/"
+  forceGenerate: true
