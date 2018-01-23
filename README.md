@@ -175,6 +175,15 @@ You can also define method like `implementation_project` in `example/build.gradl
 - [オープンソースライセンスの管理を楽にする -Android アプリ編 - クックパッド開発者ブログ](http://techlife.cookpad.com/entry/2016/04/28/183000)
 
 ## For Developers
+### Make sure after you change codebase
+
+Run the following Gradle tasks and app commands succeed:
+
+```sh
+./gradlew checkLicenses
+./gradlew generateLicensePage
+./gradlew generateLicenseJson
+```
 
 ### Release Engineering
 
