@@ -67,3 +67,31 @@
   license: bsd_3_clauses
   url: "https://opencv.org/"
   forceGenerate: true
+- artifact: com.squareup.okio:okio:+
+  name: Okio
+  copyrightHolder: Square, Inc.
+  license: apache2
+- artifact: com.squareup.retrofit2:retrofit:+
+  name: Retrofit
+  copyrightHolder: Square, Inc.
+  license: apache2
+- artifact: com.squareup.okhttp3:okhttp:+
+  name: OkHttp
+  copyrightHolder: Square, Inc.
+  license: apache2
+- artifact: com.squareup.retrofit2:converter-gson:+
+  name: "Converter: Gson"
+  copyrightHolder: Square, Inc.
+  license: apache2
+- artifact: com.twitter:twitter-text:+
+  name: twitter-text
+  copyrightHolder: Twitter, Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/twitter/twitter-text
+- artifact: com.twitter.sdk.android:+:+
+  name: Tweet Ui Android SDK
+  copyrightHolder: Twitter, Inc.
+  license: bsd_3_clauses
+  licenseUrl: https://dev.twitter.com/overview/terms/twitterkit.html
+  forceGenerate: true
