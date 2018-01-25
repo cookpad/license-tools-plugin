@@ -109,6 +109,8 @@ Available configuration fields:
 
 * `year` to indicate copyright years
 * `skip` to skip generating license entries (for proprietary libraries)
+* `forceGenerate` to force generate the output with arbitrary items. (Read [this issue](Feature Request: feature for adding/changing licenses by hand #78) for more details.)
+    - If some `pom` data is wrong, you can override some of them using this flag.
 
 ### Example
 
@@ -143,6 +145,11 @@ Available configuration fields:
   license: apache2
 - artifact: license-tools-plugin:example-dep:+
   skip: true
+- name: OpenCV
+  copyrightHolder: OpenCV team
+  license: bsd_3_clauses
+  url: "https://opencv.org/"
+  forceGenerate: true
 ```
 
 ## Notice
