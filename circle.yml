@@ -12,4 +12,6 @@ dependencies:
     - echo y | $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" "extras;android;m2repository" "extras;google;m2repository"
 test:
   override:
-    - ./gradlew check
+    - ./gradlew checkLicenses
+    - ./gradlew generateLicensePage
+    - ./gradlew generateLicenseJson
