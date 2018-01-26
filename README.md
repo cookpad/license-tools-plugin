@@ -17,7 +17,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.cookpad.android.licensetools:license-tools-plugin:1.1.0'
+        classpath 'com.cookpad.android.licensetools:license-tools-plugin:1.2.0'
     }
 }
 
@@ -139,7 +139,7 @@ Available configuration fields:
     Copyright (c) 2015 FUJI Goro (gfx)
     SQLite.g4 is: Copyright (c) 2014 by Bart Kiers
   license: apache_2
-- artifact: io.reactivex:rxandroid:1.1.0
+- artifact: io.reactivex:rxandroid:1.2.0
   name: RxAndroid
   copyrightHolder: The RxAndroid authors
   license: apache2
