@@ -54,7 +54,8 @@ licenseTools {
 def implementation_project(arg) {
     if (project.gradle.startParameter.taskNames.contains("checkLicenses")
             || project.gradle.startParameter.taskNames.contains("generateLicensePage")
-            || project.gradle.startParameter.taskNames.contains("generateLicenseJson")) {
+            || project.gradle.startParameter.taskNames.contains("generateLicenseJson")
+            || project.gradle.startParameter.taskNames.contains("check")) {
         dependencies.implementation(dependencies.project(path: arg.path, configuration: 'default'))
     } else {
         dependencies.implementation(dependencies.project(path: arg.path))
