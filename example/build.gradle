@@ -8,6 +8,9 @@ repositories {
     google() //required for databinding
 }
 
+androidExtensions {
+    experimental = true
+}
 
 android {
     compileSdkVersion 25
@@ -80,6 +83,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.6.2'
     kapt 'com.github.gfx.android.orma:orma-processor:2.4.5'
     implementation 'com.github.gfx.android.orma:orma:2.4.5'
+    kapt 'com.android.databinding:compiler:3.0.0'
     implementation 'com.google.android.gms:play-services-maps:8.4.0'
     implementation 'com.google.android.gms:play-services-location:8.4.0'
     implementation 'com.google.android.gms:play-services-analytics:8.4.0'
