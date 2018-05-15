@@ -12,6 +12,7 @@ dependencies:
     - echo y | $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" "extras;android;m2repository" "extras;google;m2repository"
 test:
   override:
+    - ./gradlew assemble # To build *.aar files
     - ./gradlew checkLicenses
     - ./gradlew generateLicensePage
     - ./gradlew generateLicenseJson
