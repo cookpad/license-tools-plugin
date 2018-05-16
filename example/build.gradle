@@ -2,14 +2,22 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.cookpad.android.licensetools'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
 
 repositories {
     google() //required for databinding
 }
 
-androidExtensions {
-    experimental = true
+if (project.gradle.startParameter.taskNames.contains("checkLicenses")
+        || project.gradle.startParameter.taskNames.contains("generateLicensePage")
+        || project.gradle.startParameter.taskNames.contains("generateLicenseJson")
+        || project.gradle.startParameter.taskNames.contains("check")) {
+    // skip `kotlin-android-extensions` to ignore running `aar`s
+    // https://github.com/JetBrains/kotlin/blob/d6d6cef10dec57aafb909e6dba763ca599a930ec/plugins/android-extensions/android-extensions-idea/src/org/jetbrains/kotlin/android/synthetic/idea/AndroidExtensionsProjectResolverExtension.kt#L94:30
+} else {
+    apply plugin: 'kotlin-android-extensions'
+    androidExtensions {
+        experimental = true
+    }
 }
 
 android {

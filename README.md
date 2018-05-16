@@ -185,6 +185,23 @@ We can fix the issue calling `checkLicense` after building.
 
 https://github.com/cookpad/license-tools-plugin/pull/84
 
+Or ignore `kotlin-android-extensions` like the below in particular tasks.
+
+```groovy
+if (project.gradle.startParameter.taskNames.contains("checkLicenses")
+        || project.gradle.startParameter.taskNames.contains("generateLicensePage")
+        || project.gradle.startParameter.taskNames.contains("generateLicenseJson")
+        || project.gradle.startParameter.taskNames.contains("check")) {
+    // skip `kotlin-android-extensions` to ignore running `aar`s
+    // https://github.com/JetBrains/kotlin/blob/d6d6cef10dec57aafb909e6dba763ca599a930ec/plugins/android-extensions/android-extensions-idea/src/org/jetbrains/kotlin/android/synthetic/idea/AndroidExtensionsProjectResolverExtension.kt#L94:30
+} else {
+    apply plugin: 'kotlin-android-extensions'
+    androidExtensions {
+        experimental = true
+    }
+}
+```
+
 ## See Also
 
 - [オープンソースライセンスの管理を楽にする -Android アプリ編 - クックパッド開発者ブログ](http://techlife.cookpad.com/entry/2016/04/28/183000)
