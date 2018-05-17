@@ -39,20 +39,11 @@ class LicenseToolsPlugin implements Plugin<Project> {
             if (notDocumented.size() > 0) {
                 project.logger.warn("# Libraries not listed in ${ext.licensesYaml}:")
                 notDocumented.each { libraryInfo ->
-                    def message = new StringBuffer()
-                    message.append("- artifact: ${libraryInfo.artifactId.withWildcardVersion()}\n")
-                    message.append("  name: ${libraryInfo.escapedName ?: "#NAME#"}\n")
-                    message.append("  copyrightHolder: ${libraryInfo.copyrightHolder ?: "#COPYRIGHT_HOLDER#"}\n")
-                    message.append("  license: ${libraryInfo.license ?: "#LICENSE#"}\n")
-                    if (libraryInfo.licenseUrl) {
-                        message.append("  licenseUrl: ${libraryInfo.licenseUrl ?: "#LICENSEURL#"}\n")
-                    }
-                    if (libraryInfo.url) {
-                        message.append("  url: ${libraryInfo.url ?: "#URL#"}\n")
-                    }
-                    project.logger.warn(message.toString().trim())
+                    def text = generateLibraryInfoText(libraryInfo)
+                    project.logger.warn(text)
                 }
             }
+
             if (notInDependencies.size() > 0) {
                 project.logger.warn("# Libraries listed in ${ext.licensesYaml} but not in dependencies:")
                 notInDependencies.each { libraryInfo ->
@@ -71,6 +62,18 @@ class LicenseToolsPlugin implements Plugin<Project> {
         checkLicenses.configure {
             group = "Verification"
             description = 'Check whether dependency licenses are listed in licenses.yml'
+        }
+
+        def updateLicenses = project.task('updateLicenses').doLast {
+            initialize(project)
+
+            def notDocumented = dependencyLicenses.notListedIn(librariesYaml)
+            LicenseToolsExtension ext = project.extensions.findByType(LicenseToolsExtension)
+
+            notDocumented.each { libraryInfo ->
+                def text = generateLibraryInfoText(libraryInfo)
+                project.file(ext.licensesYaml).append("\n${text}")
+            }
         }
 
         def generateLicensePage = project.task('generateLicensePage').doLast {
@@ -194,6 +197,21 @@ class LicenseToolsPlugin implements Plugin<Project> {
 
         project.logger.info("render ${assetsDir}/${ext.outputHtml}")
         project.file("${assetsDir}/${ext.outputHtml}").write(Templates.wrapWithLayout(content))
+    }
+
+    static String generateLibraryInfoText(LibraryInfo libraryInfo) {
+        def text = new StringBuffer()
+        text.append("- artifact: ${libraryInfo.artifactId.withWildcardVersion()}\n")
+        text.append("  name: ${libraryInfo.name ?: "#NAME#"}\n")
+        text.append("  copyrightHolder: ${libraryInfo.copyrightHolder ?: "#COPYRIGHT_HOLDER#"}\n")
+        text.append("  license: ${libraryInfo.license ?: "#LICENSE#"}\n")
+        if (libraryInfo.licenseUrl) {
+            text.append("  licenseUrl: ${libraryInfo.licenseUrl ?: "#LICENSEURL#"}\n")
+        }
+        if (libraryInfo.url) {
+            text.append("  url: ${libraryInfo.url ?: "#URL#"}\n")
+        }
+        return text.toString().trim()
     }
 
     void generateLicenseJson(Project project) {
