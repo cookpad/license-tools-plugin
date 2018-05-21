@@ -1,5 +1,8 @@
 # Revision History of license-tools-plugin
 
+## v1.3.0
+- [add task for updating licenses.yml](https://github.com/cookpad/license-tools-plugin/pull/86)
+
 ## v1.2.0
 - [feature for adding/changing licenses by hand](https://github.com/cookpad/license-tools-plugin/issues/78)
     - You can add licenses by manual
