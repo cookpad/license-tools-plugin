@@ -18,7 +18,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.cookpad.android.licensetools:license-tools-plugin:1.2.0'
+        classpath 'com.cookpad.android.licensetools:license-tools-plugin:1.3.0'
     }
 }
 
