@@ -195,6 +195,7 @@ Or ignore `kotlin-android-extensions` like the below in particular tasks.
 if (project.gradle.startParameter.taskNames.contains("checkLicenses")
         || project.gradle.startParameter.taskNames.contains("generateLicensePage")
         || project.gradle.startParameter.taskNames.contains("generateLicenseJson")
+        || project.gradle.startParameter.taskNames.contains("updateLicenses")
         || project.gradle.startParameter.taskNames.contains("check")) {
     // skip `kotlin-android-extensions` to ignore running `aar`s
     // https://github.com/JetBrains/kotlin/blob/d6d6cef10dec57aafb909e6dba763ca599a930ec/plugins/android-extensions/android-extensions-idea/src/org/jetbrains/kotlin/android/synthetic/idea/AndroidExtensionsProjectResolverExtension.kt#L94:30
