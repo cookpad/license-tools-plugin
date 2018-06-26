@@ -1,5 +1,8 @@
 # Revision History of license-tools-plugin
 
+## v1.4.0
+- [Fix resolved artifacts over android-gradle-plugin 3.0](https://github.com/cookpad/license-tools-plugin/pull/89)
+
 ## v1.3.0
 - [add task for updating licenses.yml](https://github.com/cookpad/license-tools-plugin/pull/86)
 
