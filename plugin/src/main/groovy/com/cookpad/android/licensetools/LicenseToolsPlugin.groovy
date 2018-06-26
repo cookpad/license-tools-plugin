@@ -310,11 +310,8 @@ class LicenseToolsPlugin implements Plugin<Project> {
                 c.name.matches(/^(?:release\w*)?([cC]ompile|[cC]ompileOnly|[iI]mplementation|[aA]pi)$/)
             }.collect {
                 Configuration copyConfiguration = it.copyRecursive()
-                if (copyConfiguration.metaClass.respondsTo(copyConfiguration, "setCanBeResolved", Boolean)) {
-                    copyConfiguration.setCanBeResolved(true)
-                }
-
-                copyConfiguration.resolvedConfiguration.resolvedArtifacts
+                copyConfiguration.setCanBeResolved(true)
+                copyConfiguration.resolvedConfiguration.lenientConfiguration.artifacts
             }.flatten() as List<ResolvedArtifact>
         }
 
