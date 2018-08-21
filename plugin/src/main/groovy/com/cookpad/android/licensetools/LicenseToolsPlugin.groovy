@@ -209,7 +209,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
             text.append("  licenseUrl: ${libraryInfo.licenseUrl ?: "#LICENSEURL#"}\n")
         }
         if (libraryInfo.url) {
-            text.append("  url: ${libraryInfo.url ?: "#URL#"}\n")
+            text.append("  url: ${libraryInfo.url ?: "#URL#"}\n\n")
         }
         return text.toString().trim()
     }
