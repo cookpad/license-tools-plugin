@@ -114,3 +114,26 @@
   license: The Apache License, Version 2.0
   licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
   url: https://kotlinlang.org/
+- artifact: com.mopub.volley:mopub-volley:+
+  name: MoPub Volley
+  copyrightHolder: MoPub (a division of Twitter, Inc.)
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/mopub/mopub-volley
+- artifact: com.moat.analytics.mobile.mpub:moat-mobile-app-kit:+
+  name: moat-mobile-app-kit
+  copyrightHolder: Oracle
+  license: Moat Mobile Analytics SDK End User License
+  licenseUrl: https://s3.amazonaws.com/moat-sdk-builds/license/LICENSE.txt
+- artifact: com.mopub:libAvid-mopub:+
+  name: AVID SDK (MoPub Android namespace)
+  copyrightHolder: MoPub (a division of Twitter, Inc.)
+  license: MoPub SDK License
+  licenseUrl: http://www.mopub.com/legal/sdk-license-agreement/
+  url: https://github.com/mopub/mopub-android-sdk
+- artifact: com.mopub:mopub-sdk-base:+
+  name: mopub-sdk-base
+  copyrightHolder: MoPub (a division of Twitter, Inc.)
+  license: MoPub SDK License
+  licenseUrl: http://www.mopub.com/legal/sdk-license-agreement/
+  url: https://github.com/mopub/mopub-android-sdk
