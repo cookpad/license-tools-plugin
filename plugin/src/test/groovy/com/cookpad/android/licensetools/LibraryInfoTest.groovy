@@ -9,7 +9,6 @@ import static org.junit.Assert.assertNotEquals
 import static org.junit.Assert.assertTrue
 
 public class LibraryInfoTest {
-
     @Test
     public void testJoinWords() throws Exception {
         assertEquals("foo", joinWords(["foo"]))
@@ -289,6 +288,12 @@ public class LibraryInfoTest {
         assertNotEquals("gpl3", normalizeLicense("GNU GENERAL PUBLIC LICENSE 1.0"))
         assertNotEquals("gpl3", normalizeLicense("GNU GENERAL PUBLIC LICENSE 2"))
         assertNotEquals("gpl3", normalizeLicense("GNU GENERAL PUBLIC LICENSE 2.0"))
+
+        // MoPub SDK License
+        assertEquals("mopub_sdk_license", normalizeLicense("MoPub"))
+        assertEquals("mopub_sdk_license", normalizeLicense("MoPub SDK License"))
+        assertNotEquals("mopub_sdk_license", normalizeLicense("BSD"))
+        assertNotEquals("mopub_sdk_license", normalizeLicense("MIT"))
 
         // Other
         assertEquals("Other", normalizeLicense("Other"))
