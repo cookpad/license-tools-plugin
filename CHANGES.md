@@ -1,5 +1,8 @@
 # Revision History of license-tools-plugin
 
+## v1.5.0
+- [Add MoPub SDK License template](https://github.com/cookpad/license-tools-plugin/pull/97)
+
 ## v1.4.0
 - [Fix resolved artifacts over android-gradle-plugin 3.0](https://github.com/cookpad/license-tools-plugin/pull/89)
 
