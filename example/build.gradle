@@ -14,7 +14,7 @@ androidExtensions {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '26.0.2'    
 
     dataBinding {
         enabled = true
@@ -24,6 +24,7 @@ android {
         applicationId "com.cookpad.android.licensetools.example"
         minSdkVersion 16
         targetSdkVersion 25
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
 
