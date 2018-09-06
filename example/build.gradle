@@ -14,7 +14,7 @@ androidExtensions {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '26.0.2'    
+    buildToolsVersion '26.0.2'
 
     dataBinding {
         enabled = true
