@@ -169,10 +169,6 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
             case ~/(?i).*\bmopub\b.*/:
             case ~/(?i).*\bmopub\b.*\bsdk\b.*\blicense\b.*/:
                 return "mopub_sdk_license"
-            case ~/(?i).*\bmoat\b.*/:
-            case ~/(?i).*\bmoat\b.*\bmobile\b.*\banalytics\b.*\bsdk\b.*\blicense\b.*/:
-            case ~/(?i).*\bmoat\b.*\bmobile\b.*\banalytics\b.*\bsdk\b.*\bend\b.*\buser\b.*\blicense\b.*/:
-                return "moat"
             default:
                 return name
         }

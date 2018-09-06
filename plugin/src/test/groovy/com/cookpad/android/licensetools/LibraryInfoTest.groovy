@@ -295,13 +295,6 @@ public class LibraryInfoTest {
         assertNotEquals("mopub_sdk_license", normalizeLicense("BSD"))
         assertNotEquals("mopub_sdk_license", normalizeLicense("MIT"))
 
-        // Moat SDK License
-        assertEquals("moat", normalizeLicense("moat"))
-        assertEquals("moat", normalizeLicense("Moat Mobile Analytics SDK License"))
-        assertEquals("moat", normalizeLicense("Moat Mobile Analytics SDK End User License"))
-        assertNotEquals("moat", normalizeLicense("BSD"))
-        assertNotEquals("moat", normalizeLicense("MIT"))
-
         // Other
         assertEquals("Other", normalizeLicense("Other"))
         assertEquals("No license found", normalizeLicense("No license found"))
