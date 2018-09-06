@@ -166,6 +166,9 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
             case ~/(?i).*\bgpl\b?.*3.*/:
             case ~/(?i).*\bgpl\b.*/:
                 return "gpl3"
+            case ~/(?i).*\bmopub\b.*/:
+            case ~/(?i).*\bmopub\b.*\bsdk\b.*\blicense\b.*/:
+                return "mopub_sdk_license"
             default:
                 return name
         }
