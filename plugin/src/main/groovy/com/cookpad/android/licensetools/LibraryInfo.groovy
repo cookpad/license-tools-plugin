@@ -80,16 +80,27 @@ public class LibraryInfo implements Comparable<LibraryInfo> {
         } else if (!copyrightHolder) {
             return null;
         } else {
-            return buildCopyrightStatement(copyrightHolder)
+            return buildCopyrightStatement(copyrightHolder, "&copy;")
         }
     }
 
-    private String buildCopyrightStatement(String copyrightHolder) {
+    // called from text templates
+    public String getCopyrightStatementText() {
+        if (notice) {
+            return notice;
+        } else if (!copyrightHolder) {
+            return null;
+        } else {
+            return buildCopyrightStatement(copyrightHolder, "(c)")
+        }
+    }
+
+    private String buildCopyrightStatement(String copyrightHolder, String copyMark) {
         def dot = copyrightHolder.endsWith(".") ? "" : "."
         if (year) {
-            return "Copyright &copy; ${year}, ${copyrightHolder}${dot} All rights reserved."
+            return "Copyright ${copyMark} ${year}, ${copyrightHolder}${dot} All rights reserved."
         } else {
-            return "Copyright &copy; ${copyrightHolder}${dot} All rights reserved."
+            return "Copyright ${copyMark} ${copyrightHolder}${dot} All rights reserved."
         }
     }
 

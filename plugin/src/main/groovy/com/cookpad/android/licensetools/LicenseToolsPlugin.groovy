@@ -11,6 +11,8 @@ import org.gradle.api.artifacts.ResolvedArtifact
 import org.xml.sax.helpers.DefaultHandler
 import org.yaml.snakeyaml.Yaml
 
+import java.nio.charset.Charset
+
 class LicenseToolsPlugin implements Plugin<Project> {
 
     final yaml = new Yaml()
@@ -87,6 +89,12 @@ class LicenseToolsPlugin implements Plugin<Project> {
             generateLicenseJson(project)
         }
         generateLicenseJson.dependsOn('checkLicenses')
+
+        def generateLicenseRawResources = project.task('generateLicenseRawResources').doLast {
+            initialize(project)
+            generateLicenseRawResources(project)
+        }
+        generateLicenseRawResources.dependsOn('checkLicenses')
 
         project.tasks.findByName("check").dependsOn('checkLicenses')
     }
@@ -276,6 +284,58 @@ class LicenseToolsPlugin implements Plugin<Project> {
 
         project.logger.info("render ${assetsDir}/${ext.outputJson}")
         project.file("${assetsDir}/${ext.outputJson}").write(json.toString())
+    }
+
+    void generateLicenseRawResources(Project project) {
+        def noLicenseLibraries = new ArrayList<LibraryInfo>()
+
+        def contentLength = 0
+        def metadata = new StringBuilder()
+        def content = new StringBuilder()
+        def utf8 = Charset.forName("UTF-8")
+
+        librariesYaml.each { libraryInfo ->
+            if (libraryInfo.skip) {
+                project.logger.info("generateLicenseRawResources: skip ${libraryInfo.name}")
+                return
+            }
+
+            // merge dependencyLicenses's libraryInfo into librariesYaml's
+            def o = dependencyLicenses.find(libraryInfo.artifactId)
+            if (o) {
+                libraryInfo.license = libraryInfo.license ?: o.license
+                libraryInfo.filename = o.filename
+                libraryInfo.artifactId = o.artifactId
+                libraryInfo.url = libraryInfo.url ?: o.url
+            }
+            try {
+                def header = Templates.buildLicenseGoogleTextHeader(libraryInfo)
+                def body = Templates.buildLicenseGoogleTextBody(libraryInfo)
+                def bodyLength = body.getBytes(utf8).length
+
+                content.append(header)
+                contentLength += header.getBytes(utf8).length
+
+                metadata.append("$contentLength:$bodyLength ${libraryInfo.libraryName}\n")
+
+                content.append(body)
+                contentLength += bodyLength
+            } catch (NotEnoughInformationException e) {
+                noLicenseLibraries.add(e.libraryInfo)
+            }
+        }
+
+        assertEmptyLibraries(noLicenseLibraries)
+
+        def outputDir = project.file("src/main/res/raw")
+        if (!outputDir.exists()) {
+            outputDir.mkdirs()
+        }
+
+        project.file("${outputDir}/third_party_license_metadata")
+                .write(metadata.toString(), "UTF-8")
+        project.file("${outputDir}/third_party_licenses")
+                .write(content.toString(), "UTF-8")
     }
 
     static void assertEmptyLibraries(ArrayList<LibraryInfo> noLicenseLibraries) {

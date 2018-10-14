@@ -19,6 +19,19 @@ public class Templates {
         ])
     }
 
+    public static String buildLicenseGoogleTextHeader(LibraryInfo library) {
+        return "\n\n${library.libraryName}:\n\n"
+    }
+
+    public static String buildLicenseGoogleTextBody(LibraryInfo library) {
+        assertLicenseAndStatement(library)
+
+        def templateFile = "template/licenses_text/${library.normalizedLicense}.txt"
+        return templateEngine.createTemplate(readResourceContent(templateFile)).make([
+                "library": library
+        ])
+    }
+
     public static void assertLicenseAndStatement(LibraryInfo library) {
         if (!library.license) {
             throw new NotEnoughInformationException(library)
