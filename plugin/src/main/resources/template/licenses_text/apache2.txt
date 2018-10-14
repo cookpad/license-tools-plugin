@@ -1,3 +1,4 @@
+${library.copyrightStatementText}<% print library.url.isEmpty() ? "" : """\n${library.url}""" %>
 
 Apache License
 Version 2.0, January 2004

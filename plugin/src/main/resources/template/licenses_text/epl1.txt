@@ -1,3 +1,5 @@
+${library.copyrightStatementText}<% print library.url.isEmpty() ? "" : """\n${library.url}""" %>
+
 Eclipse Public License - v 1.0
 
 THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC

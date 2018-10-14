@@ -1,3 +1,5 @@
+${library.copyrightStatementText}<% print library.url.isEmpty() ? "" : """\n${library.url}""" %>
+
 Free Public License 1.0.0
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.

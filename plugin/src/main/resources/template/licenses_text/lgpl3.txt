@@ -1,3 +1,5 @@
+${library.copyrightStatementText}<% print library.url.isEmpty() ? "" : """\n${library.url}""" %>
+
 GNU LESSER GENERAL PUBLIC LICENSE
 Version 3, 29 June 2007
 

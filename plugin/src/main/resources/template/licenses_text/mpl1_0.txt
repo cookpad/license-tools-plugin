@@ -1,3 +1,5 @@
+${library.copyrightStatementText}<% print library.url.isEmpty() ? "" : """\n${library.url}""" %>
+
 MOZILLA PUBLIC LICENSE
 Version 1.0
 

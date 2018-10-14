@@ -1,3 +1,5 @@
+${library.copyrightStatementText}<% print library.url.isEmpty() ? "" : """\n${library.url}""" %>
+
 Mozilla Public License Version 2.0
 ==================================
 
