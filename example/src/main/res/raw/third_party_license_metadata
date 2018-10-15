@@ -1,0 +1,25 @@
+30:10423 Android Support Libraries
+10464:10377 RxJava
+20852:1494 ANTLR4
+22363:10375 Android Orma
+32748:1319 Glide
+34076:10339 Gson
+44429:10389 RxAndroid
+54830:10340 Picasso
+65191:6983 reactive-streams
+72185:1498 OpenCV
+73692:10340 Okio
+84045:10340 Retrofit
+94396:10340 OkHttp
+104756:10340 Converter: Gson
+115113:10381 twitter-text
+125519:1478 Tweet Ui Android SDK
+127036:10362 org.jetbrains.kotlin:kotlin-stdlib
+137428:10363 IntelliJ IDEA Annotations
+147850:10362 org.jetbrains.kotlin:kotlin-android-extensions-runtime
+158229:10402 MoPub Volley
+168670:13098 AVID SDK (MoPub Android namespace)
+181787:13098 mopub-sdk-base
+194915:10430 Android Lifecycle Runtime
+205369:10430 Android Arch-Common
+215828:10430 Android Lifecycle-Common
