@@ -11,6 +11,7 @@ import org.gradle.api.artifacts.ResolvedArtifact
 import org.xml.sax.helpers.DefaultHandler
 import org.yaml.snakeyaml.DumperOptions
 import org.yaml.snakeyaml.DumperOptions.FlowStyle
+import org.yaml.snakeyaml.DumperOptions.LineBreak
 import org.yaml.snakeyaml.DumperOptions.ScalarStyle
 import org.yaml.snakeyaml.Yaml
 
@@ -27,6 +28,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
             canonical = false
             defaultFlowStyle = FlowStyle.BLOCK
             defaultScalarStyle = ScalarStyle.DOUBLE_QUOTED
+            lineBreak = LineBreak.UNIX
         }
 
         YAML = new Yaml(options)
