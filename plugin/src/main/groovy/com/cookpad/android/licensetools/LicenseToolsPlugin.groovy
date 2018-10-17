@@ -217,18 +217,23 @@ class LicenseToolsPlugin implements Plugin<Project> {
     }
 
     static String generateLibraryInfoText(LibraryInfo libraryInfo) {
-        def text = new StringBuffer()
-        text.append("- artifact: ${libraryInfo.artifactId.withWildcardVersion()}\n")
-        text.append("  name: ${libraryInfo.name ?: "#NAME#"}\n")
-        text.append("  copyrightHolder: ${libraryInfo.copyrightHolder ?: "#COPYRIGHT_HOLDER#"}\n")
-        text.append("  license: ${libraryInfo.license ?: "#LICENSE#"}\n")
+        def data = [
+                artifact: libraryInfo.artifactId.withWildcardVersion(),
+                name: libraryInfo.name ?: "#NAME#",
+                copyrightHolder: libraryInfo.copyrightHolder ?: "#COPYRIGHT_HOLDER#",
+                license: libraryInfo.license ?: "#LICENSE#",
+        ]
+
         if (libraryInfo.licenseUrl) {
-            text.append("  licenseUrl: ${libraryInfo.licenseUrl ?: "#LICENSEURL#"}\n")
+            data["licenseUrl"] = libraryInfo.licenseUrl ?: "#LICENSEURL#"
         }
+
         if (libraryInfo.url) {
-            text.append("  url: ${libraryInfo.url ?: "#URL#"}\n")
+            data["url"] = libraryInfo.url ?: "#URL#"
         }
-        return text.toString().trim()
+
+        // Dump the info like one of array elements
+        return YAML.dump([data])
     }
 
     void generateLicenseJson(Project project) {
