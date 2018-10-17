@@ -174,8 +174,8 @@ class LicenseToolsPlugin implements Plugin<Project> {
         }
     }
 
-    Map<String, ?> loadYaml(File yamlFile) {
-        return yaml.load(yamlFile.text) as Map<String, ?> ?: [:]
+    static Map<String, ?>[] loadYaml(File yamlFile) {
+        return YAML.load(yamlFile.text) as Map<String, ?>[] ?: []
     }
 
     void generateLicensePage(Project project) {
