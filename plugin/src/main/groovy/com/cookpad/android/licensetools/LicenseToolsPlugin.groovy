@@ -29,6 +29,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
             defaultFlowStyle = FlowStyle.BLOCK
             defaultScalarStyle = ScalarStyle.DOUBLE_QUOTED
             lineBreak = LineBreak.UNIX
+            indent = 2
         }
 
         YAML = new Yaml(options)
@@ -235,12 +236,12 @@ class LicenseToolsPlugin implements Plugin<Project> {
         }
 
         // Dump the info like one of array elements
-        return YAML.dump([datum])
+        return YAML.dump([datum]).trim()
     }
 
     static String generateMissingLibraryInfoText(LibraryInfo libraryInfo) {
         def datum = [
-                artifact: libraryInfo.artifactId,
+                artifact: libraryInfo.artifactId.toString(),
                 name: libraryInfo.name,
         ]
 
@@ -254,7 +255,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
         }
 
         // Dump the info like one of array elements
-        return YAML.dump([datum])
+        return YAML.dump([datum]).trim()
     }
 
     void generateLicenseJson(Project project) {
