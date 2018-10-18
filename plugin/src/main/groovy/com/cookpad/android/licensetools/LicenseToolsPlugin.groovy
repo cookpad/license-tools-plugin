@@ -219,7 +219,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
     }
 
     static String generateLibraryInfoText(LibraryInfo libraryInfo) {
-        def data = [
+        def datum = [
                 artifact: libraryInfo.artifactId.withWildcardVersion(),
                 name: libraryInfo.name ?: "#NAME#",
                 copyrightHolder: libraryInfo.copyrightHolder ?: "#COPYRIGHT_HOLDER#",
@@ -227,15 +227,34 @@ class LicenseToolsPlugin implements Plugin<Project> {
         ]
 
         if (libraryInfo.licenseUrl) {
-            data["licenseUrl"] = libraryInfo.licenseUrl ?: "#LICENSEURL#"
+            datum["licenseUrl"] = libraryInfo.licenseUrl ?: "#LICENSEURL#"
         }
 
         if (libraryInfo.url) {
-            data["url"] = libraryInfo.url ?: "#URL#"
+            datum["url"] = libraryInfo.url ?: "#URL#"
         }
 
         // Dump the info like one of array elements
-        return YAML.dump([data])
+        return YAML.dump([datum])
+    }
+
+    static String generateMissingLibraryInfoText(LibraryInfo libraryInfo) {
+        def datum = [
+                artifact: libraryInfo.artifactId,
+                name: libraryInfo.name,
+        ]
+
+        if (!libraryInfo.license) {
+            datum["license"] = "#LICENSE#"
+        }
+
+        if (!libraryInfo.copyrightStatement) {
+            datum["copyrightHolder"] = "#AUTHOR# (or authors: [...])"
+            datum["year"] = "#YEAR# (optional)"
+        }
+
+        // Dump the info like one of array elements
+        return YAML.dump([datum])
     }
 
     void generateLicenseJson(Project project) {
@@ -307,17 +326,12 @@ class LicenseToolsPlugin implements Plugin<Project> {
         StringBuilder message = new StringBuilder();
         message.append("Not enough information for:\n")
         message.append("---\n")
+
         noLicenseLibraries.each { libraryInfo ->
-            message.append("- artifact: ${libraryInfo.artifactId}\n")
-            message.append("  name: ${libraryInfo.name}\n")
-            if (!libraryInfo.license) {
-                message.append("  license: #LICENSE#\n")
-            }
-            if (!libraryInfo.copyrightStatement) {
-                message.append("  copyrightHolder: #AUTHOR# (or authors: [...])\n")
-                message.append("  year: #YEAR# (optional)\n")
-            }
+            message.append(generateMissingLibraryInfoText(libraryInfo))
+            message.append("\n")
         }
+
         throw new RuntimeException(message.toString())
     }
 
