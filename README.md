@@ -6,6 +6,7 @@ Gradle Plugin to check library licenses and generate license pages.
 * `./gradlew updateLicenses` to update library information file `licenses.yml`
 * `./gradlew generateLicensePage` to generate a license page `licenses.html`
 * `./gradlew generateLicenseJson` to generate a license json file `licenses.json`
+* `./gradlew generateLicenseRawResources` to generate license raw resources `third_party_license_metadata` and `third_party_licenses` for Google's [`play-services-oss-licenses` library](https://developers.google.com/android/guides/opensource)
 
 ## Setup
 
@@ -78,7 +79,18 @@ Then, `./gradlew checkLicenses` will passes.
 
 This plugin does not provide `Activity` nor `Fragment` to show `licenses.html`. You should add it by yourself.
 
-`example/MainActivity` is an example.
+`example/HtmlActivity` is an example.
+
+### Generate `third_party_license` and its metadata by the `generateLicenseRawResources` task
+
+If you prefer using Google Play's `play-services-oss-licenses` library to display open source software notices, you can generate its content from `licenses.yml` by `./gradlew generateLicenseRawResources`. Generated content is stored in following resource files:
+
+- `app/src/main/res/raw/third_party_licenses`
+- `app/src/main/res/raw/third_party_license_metadata`
+
+You can trigger `OssLicensesMenuActivity` provided by `play-services-oss-licenses` library to display them. `example/MainActivity` is an example. See [Google Developers](https://developers.google.com/android/guides/opensource#displaying_license_information) for more details.
+
+Please note you don't need to use gradle plugin `oss-licenses-plugin` if you generate `third_party_licenses` with this `license-tools-plugin` plugin.
 
 ### Configuring the plugin
 
@@ -169,6 +181,7 @@ Run the following Gradle tasks and app commands succeed:
 ./gradlew checkLicenses
 ./gradlew generateLicensePage
 ./gradlew generateLicenseJson
+./gradlew generateLicenseRawResources
 ```
 
 ### Release Engineering
