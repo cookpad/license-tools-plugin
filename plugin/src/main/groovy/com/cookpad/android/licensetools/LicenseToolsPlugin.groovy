@@ -121,9 +121,14 @@ class LicenseToolsPlugin implements Plugin<Project> {
             def dependencyDesc = "$d.moduleVersion.id.group:$d.moduleVersion.id.name:$d.moduleVersion.id.version"
 
             def libraryInfo = new LibraryInfo()
-            libraryInfo.artifactId = ArtifactId.parse(dependencyDesc)
-            libraryInfo.filename = d.file
-            dependencyLicenses.add(libraryInfo)
+            try {
+                libraryInfo.artifactId = ArtifactId.parse(dependencyDesc)
+                libraryInfo.filename = d.file
+                dependencyLicenses.add(libraryInfo)
+            } catch (IllegalArgumentException e) {
+                project.logger.info("Unsupport dependency: $dependencyDesc")
+                return
+            }
 
             Dependency pomDependency = project.dependencies.create("$dependencyDesc@pom")
             Configuration pomConfiguration = project.configurations.detachedConfiguration(pomDependency)
