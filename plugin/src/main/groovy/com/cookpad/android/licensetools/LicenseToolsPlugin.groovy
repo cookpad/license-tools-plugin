@@ -307,7 +307,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
         project.rootProject.subprojects.findAll { Project p -> !ignoredProjects.contains(p.name) }.each { Project subproject ->
             runtimeDependencies << subproject.configurations.all.findAll { Configuration c ->
                 // compile|implementation|api, release(Compile|Implementation|Api), releaseProduction(Compile|Implementation|Api), and so on.
-                c.name.matches(/^(?:release\w*)?([cC]ompile|[cC]ompileOnly|[iI]mplementation|[aA]pi)$/)
+                c.name.matches(/^(?!releaseUnitTest)(?:release\w*)?([cC]ompile|[cC]ompileOnly|[iI]mplementation|[aA]pi)$/)
             }.collect {
                 Configuration copyConfiguration = it.copyRecursive()
                 copyConfiguration.setCanBeResolved(true)
