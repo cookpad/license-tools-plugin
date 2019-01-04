@@ -1,5 +1,8 @@
 # Revision History of license-tools-plugin
 
+## v1.6.0
+- [Reject the configuration name started with `releaseUnitTest`](https://github.com/cookpad/license-tools-plugin/pull/109)
+
 ## v1.5.0
 - [Add MoPub SDK License template](https://github.com/cookpad/license-tools-plugin/pull/97)
 
