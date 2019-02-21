@@ -19,9 +19,10 @@ public class ArtifactId implements Comparable<ArtifactId> {
             return new ArtifactId("", "", "");
         }
         String[] parts = notation.split(":");
-        assert parts.length == 3;
-
-        return new ArtifactId(parts[0], parts[1], parts[2]);
+        if (parts.length == 3) {
+            return new ArtifactId(parts[0], parts[1], parts[2]);
+        }
+        throw new IllegalArgumentException("Invalid arguments: " + notation);
     }
 
     public boolean matches(ArtifactId artifactId) {
