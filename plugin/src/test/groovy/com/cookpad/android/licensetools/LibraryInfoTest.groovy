@@ -295,6 +295,17 @@ public class LibraryInfoTest {
         assertNotEquals("mopub_sdk_license", normalizeLicense("BSD"))
         assertNotEquals("mopub_sdk_license", normalizeLicense("MIT"))
 
+        // ICU License
+        assertEquals("icu_license", normalizeLicense("ICU License"))
+        assertNotEquals("icu_license", normalizeLicense("BSD"))
+        assertNotEquals("icu_license", normalizeLicense("MIT"))
+
+        // Bouncy Castle License
+        assertEquals("bouncy_castle_license", normalizeLicense("Bouncy Castle License"))
+        assertNotEquals("bouncy_castle_license", normalizeLicense("BSD"))
+        assertNotEquals("bouncy_castle_license", normalizeLicense("MIT"))
+
+
         // Other
         assertEquals("Other", normalizeLicense("Other"))
         assertEquals("No license found", normalizeLicense("No license found"))
