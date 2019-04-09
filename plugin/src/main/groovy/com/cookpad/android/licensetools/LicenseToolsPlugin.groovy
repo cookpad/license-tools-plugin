@@ -207,7 +207,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
     static String generateLibraryInfoText(LibraryInfo libraryInfo) {
         def text = new StringBuffer()
         text.append("- artifact: ${libraryInfo.artifactId.withWildcardVersion()}\n")
-        text.append("  name: ${libraryInfo.name ?: "#NAME#"}\n")
+        text.append("  name: ${libraryInfo.escapedName ?: "#NAME#"}\n")
         text.append("  copyrightHolder: ${libraryInfo.copyrightHolder ?: "#COPYRIGHT_HOLDER#"}\n")
         text.append("  license: ${libraryInfo.license ?: "#LICENSE#"}\n")
         if (libraryInfo.licenseUrl) {
