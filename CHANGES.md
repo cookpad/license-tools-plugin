@@ -1,5 +1,8 @@
 # Revision History of license-tools-plugin
 
+## v1.70
+- [Fix crashes if uses local AAR libs](https://github.com/cookpad/license-tools-plugin/pull/104)
+
 ## v1.6.0
 - [Reject the configuration name started with `releaseUnitTest`](https://github.com/cookpad/license-tools-plugin/pull/109)
 
