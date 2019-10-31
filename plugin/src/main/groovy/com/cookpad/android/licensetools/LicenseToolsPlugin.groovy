@@ -304,6 +304,8 @@ class LicenseToolsPlugin implements Plugin<Project> {
 
     // originated from https://github.com/hierynomus/license-gradle-plugin DependencyResolver.groovy
     Set<ResolvedArtifact> resolveProjectDependencies(Project project, Set<String> ignoredProjects) {
+        LicenseToolsExtension ext = project.extensions.findByType(LicenseToolsExtension)
+
         def subprojects = project.rootProject.subprojects.findAll { Project p -> !ignoredProjects.contains(p.name) }
                 .groupBy { Project p -> "$p.group:$p.name:$p.version" }
 
@@ -312,7 +314,7 @@ class LicenseToolsPlugin implements Plugin<Project> {
         project.rootProject.subprojects.findAll { Project p -> !ignoredProjects.contains(p.name) }.each { Project subproject ->
             runtimeDependencies << subproject.configurations.all.findAll { Configuration c ->
                 // compile|implementation|api, release(Compile|Implementation|Api), releaseProduction(Compile|Implementation|Api), and so on.
-                c.name.matches(/^(?!releaseUnitTest)(?:release\w*)?([cC]ompile|[cC]ompileOnly|[iI]mplementation|[aA]pi)$/)
+                c.name.matches(ext.configurationRegex)
             }.collect {
                 Configuration copyConfiguration = it.copyRecursive()
                 copyConfiguration.setCanBeResolved(true)

@@ -13,4 +13,7 @@ public class LicenseToolsExtension {
     public Set<String> ignoredGroups = new HashSet<>()
 
     public Set<String> ignoredProjects = new HashSet<>()
+
+    public String configurationRegex = /^(?!releaseUnitTest)(?:release\w*)?([cC]ompile|[cC]ompileOnly|[iI]mplementation|[aA]pi)$/
+
 }
