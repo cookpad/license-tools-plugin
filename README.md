@@ -1,6 +1,6 @@
 # THIS REPOSITORY WAS ARCHIVED
 
-Attention: Development on this tool is winding down. Please consider switching to https://github.com/kazyApp/LicenseToolsPlugin in the coming months.
+Attention: Development on this tool is winding down. Please consider switching to https://github.com/cookpad/LicenseToolsPlugin in the coming months.
 
 
 
